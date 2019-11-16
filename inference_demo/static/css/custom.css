@@ -1,0 +1,30 @@
+.navbar-bg {
+    background-color: #0070e8;
+
+}
+
+.footer-bg {
+    background-color: #eeeeee;
+
+}
+
+.footer-link-text a {
+    color: #000000;
+
+}
+
+.footer-link-text a:hover {
+    color: #4b4b4b;
+
+}
+
+.socialMediaLinks a {
+    font-size: 26px;
+    margin: 0 10px 0 0;
+    text-decoration: none;
+}
+
+.brand-font {
+    font-family: cursive;
+
+}

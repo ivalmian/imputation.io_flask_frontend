@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+{% from "macros.html" import nav_link with context %}
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Start imports -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151427866-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-151427866-1');
+  </script>
+
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  <!-- Font awesome js -->
+  <script src="https://kit.fontawesome.com/8318792aa9.js" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap js dependencies -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  
+  <!-- Custom additions CSS -->
+  <link rel="stylesheet" href="static/css/custom.css">
+
+  <!-- Finished imports-->
+
+  <title>{% block title %}Imputation.io{% endblock %}</title>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
+        <a class="navbar-brand brand-font" href="#">Imputation.io</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+   
+              <ul class="navbar-nav">
+                  {{ nav_link('web_app', 'Web app') }}
+                  {{ nav_link('how_it_works', 'How it works') }}
+                  {{ nav_link('about_api', 'Learn about the API') }}
+
+              </ul>
+           
+        </div>
+      </nav>
+
+    {% block body  %}
+    <!-- Main content -->
+    {% endblock %}
+
+  <!-- Footer -->
+  <footer class="page-footer footer-link-text">
+
+      <!-- Social media -->   
+      <div class="d-flex justify-content-between footer-bg text-dark">
+        <div class="socialMediaLinks p-3">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=imputation.io&t=Find personalized predictions in your data" target="_blank" title="Share on Facebook"><i class="fab fa-facebook-f  "></i></a>
+          <a href="https://twitter.com/intent/tweet?source=imputation.io&text=Find personalized predictions in your data" target="_blank" title="Tweet"><i class="fab fa-twitter  "></i></a>
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url=imputation.io&title=Personalized%20data%20predictions&summary=&source=imputation.io" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin "></i></a>
+          <a href="mailto:?subject=imputation.io&body=Find personalized predictions in your data" target="_blank" title="Share via Email"><i class="fas fa-envelope-open"></i></a>
+        </div>
+      
+        <div class="p-4">
+            <a href="privacy">Privacy</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:admin@imputation.io">Contact us</a>
+        </div>
+      </div>  
+ 
+      <!-- Copyright -->   
+      <div class="footer-copyright text-center p-3 ">
+        © 2019 Copyright: <a href="http://imputation.io">Imputation.io</a> 
+      </div>
+
+    </footer>
+
+</body>
+
+</html>

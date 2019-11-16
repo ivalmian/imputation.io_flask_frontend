@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %} Error {{ error_code }} {% endblock %}
+
+{% block body  %}
+    <!-- Main content -->
+    <div class="container p-3">
+    <h1>Error {{ error_code }}</h1>
+
+    <p>Alas, you're lost. Or, maybe we're broken? Click on something else and hope for a better outcome</p>
+    </div>
+{% endblock %}

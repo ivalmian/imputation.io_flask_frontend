@@ -1,0 +1,5 @@
+wtforms
+werkzeug
+flask
+tensorflow==2.0
+dill
