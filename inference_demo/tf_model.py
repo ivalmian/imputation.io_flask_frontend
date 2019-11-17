@@ -1,3 +1,4 @@
+
 import tensorflow as tf
 from tensorflow.keras import models,layers,callbacks,metrics,backend, losses
 import numpy as np
@@ -10,8 +11,8 @@ class LayerNormalization(layers.Layer):
         super().__init__(**kwargs)
 
     def build(self, input_shape):
-        self.gamma = self.add_weight(name='gamma', shape=input_shape[-1:], initializer=tf.initializers.Ones(), trainable=True)
-        self.beta = self.add_weight(name='beta', shape=input_shape[-1:], initializer=tf.initializers.Zeros(), trainable=True)
+        self.gamma = self.add_weight(name='gamma', shape=input_shape[-1:],  trainable=True)
+        self.beta = self.add_weight(name='beta', shape=input_shape[-1:], trainable=True)
         super().build(input_shape)
 
     def call(self, x, **kwargs):
@@ -115,3 +116,5 @@ def full_model(seq_len,
 
     mdl = models.Model(inputs=[inp_layer],outputs=[out_layer])
     return mdl
+
+

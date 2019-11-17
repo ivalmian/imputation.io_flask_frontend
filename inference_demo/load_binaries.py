@@ -2,11 +2,11 @@
 # Reads binaries for the ml model using paths in app.config and returns them
 
 # Make a tf model since we are only loading the weights
-from inference_demo import tf_model
+#from inference_demo import tf_model
 
 # Binaries saved with dill
 import dill
-# import tensorflow as tf
+
 
 
 def load_binaries(app):
@@ -20,17 +20,16 @@ def load_binaries(app):
     with open(app.config['RECORD_DESCRIPTION_PATH'], 'rb') as fin:
         recordname2description = dill.load(fin)
 
-    mdl = tf_model.full_model(seq_len=11,
-                              vocab_size=len(val2ind),
-                              num_layers=4)
+    # mdl = tf_model.full_model(seq_len=11,
+    #                           vocab_size=len(val2ind),
+    #                           num_layers=4)
+    #
+    # mdl.load_weights(filepath=app.config['MODEL_WEIGHTS_PATH'])
 
-    mdl.load_weights(filepath=app.config['MODEL_WEIGHTS_PATH'])
-
-    tf_binaries = {'mdl': mdl}
 
     dict_binaries = {'numeric_mappers': numeric_mappers,
                      'data_columns': data_columns,
                      'val2ind': val2ind,
                      'recordname2description': recordname2description}
 
-    return tf_binaries, dict_binaries
+    return 'None', dict_binaries

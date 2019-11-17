@@ -1,5 +1,6 @@
+numpy
 wtforms
 werkzeug
 flask
-tensorflow==2.0
+tensorflow==1.14
 dill

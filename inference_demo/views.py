@@ -1,4 +1,5 @@
-from inference_demo import app, data_dictionary, dict_binaries
+from inference_demo import app, data_dictionary, dict_binaries, make_prediction
+
 
 from flask import render_template, request, jsonify
 from werkzeug.exceptions import HTTPException
@@ -13,7 +14,7 @@ def web_app():
                                       recordname2description=dict_binaries['recordname2description'],
                                       request_form=request.form)
     if request.method == 'POST':
-        return jsonify(request.form), 200
+        return jsonify(str(make_prediction.predict(request.form))), 200
     #     #return jsonify(form.validate()),200
        # return 'Form submitted successfully', 200
     return render_template('webapp.html',
