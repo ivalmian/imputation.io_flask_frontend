@@ -1,23 +1,28 @@
+# imports from our package
 from inference_demo import app, data_dictionary, binaries_dict, make_prediction
+from inference_demo.forms import CensusImputeForm
 
+# external imports
 from flask import render_template, request  # , jsonify
 from werkzeug.exceptions import HTTPException
-from inference_demo.forms import CensusImputeForm
 import numpy as np
 
 
 @app.route('/')
 @app.route('/web_app', methods=["GET", "POST"])
 def web_app():
+
     form = CensusImputeForm.make_form(data_dict=data_dictionary.data_dict,
                                       numeric_fields=binaries_dict['numeric_mappers'].keys(),
                                       recordname2description=binaries_dict['recordname2description'],
                                       request_form=request.form)
+
     pred_description = None
 
     if request.method == 'POST':
         pred, inferred, all_keys = make_prediction.predict(request.form)
         pred_description = dict()
+
         for inferred_ind in inferred:
             key = all_keys[inferred_ind]
             ind2val = {i: (t[0],
@@ -32,9 +37,7 @@ def web_app():
     return render_template('webapp.html',
                            form=form,
                            pred_description=pred_description,
-                           description_dict=binaries_dict['recordname2description']
-
-                           )
+                           description_dict=binaries_dict['recordname2description'])
 
 
 @app.route('/privacy')

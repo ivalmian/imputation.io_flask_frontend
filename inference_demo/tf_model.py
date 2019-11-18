@@ -1,3 +1,8 @@
+#this is only called in dev
+from inference_demo import app
+assert app.config['FLASK_ENV'] == 'dev'
+
+#begin rest of code
 
 import tensorflow as tf
 from tensorflow.keras import models,layers,callbacks,metrics,backend, losses

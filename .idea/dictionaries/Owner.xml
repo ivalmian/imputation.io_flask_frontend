@@ -3,6 +3,7 @@
     <words>
       <w>conv</w>
       <w>crossentropy</w>
+      <w>cuda</w>
       <w>datasets</w>
       <w>dropdown</w>
       <w>endblock</w>

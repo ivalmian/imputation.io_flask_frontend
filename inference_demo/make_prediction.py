@@ -1,7 +1,6 @@
-from inference_demo import binaries_dict, graph, mdl, session
-import numpy as np
+from inference_demo import app, binaries_dict
 
-import tensorflow as tf
+import numpy as np
 
 
 def predict(form_data):
@@ -32,10 +31,17 @@ def predict(form_data):
 
     pred_vector = np.array(pred_vector)
 
-    inferred = np.argwhere(pred_vector==0)
+    inferred = np.argwhere(pred_vector == 0).flatten()
     out = np.expand_dims(pred_vector, axis=0)
 
-    with graph.as_default():
-        tf.keras.backend.set_session(session)
-        pred = mdl.predict(out)
-    return pred, inferred.flatten(), all_keys
+    if app.config['FLASK_ENV'] == 'dev':
+        from inference_demo import graph, mdl, session
+        import tensorflow as tf
+
+        with graph.as_default():
+            tf.keras.backend.set_session(session)
+            pred = mdl.predict(out)
+    elif app.config['FLASK_ENV'] == 'prod':
+        raise NotImplementedError
+
+    return pred, inferred, all_keys

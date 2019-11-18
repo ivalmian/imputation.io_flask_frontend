@@ -1,12 +1,6 @@
 from inference_demo.version import __version__
 
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
 from flask import Flask
-
-import tensorflow as tf
-from inference_demo import tf_model
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
@@ -17,8 +11,16 @@ from inference_demo.load_binaries import load_binaries
 
 binaries_dict = load_binaries(app)
 
+tf_binaries = None
 
-with tf.device('/device:cpu:0'):
+# setting up tf model in development, for production we call out to a model serving API
+if app.config['FLASK_ENV'] == 'dev':
+
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+    import tensorflow as tf
+    from inference_demo import tf_model
+
     graph = tf.Graph()
     with graph.as_default():
         session = tf.keras.backend.get_session()
@@ -28,6 +30,6 @@ with tf.device('/device:cpu:0'):
 
         mdl.load_weights(filepath=app.config['SAVED_MODEL_PATH'])
 
-tf_binaries = {'mdl': mdl, 'graph': graph}
+    tf_binaries = {'mdl': mdl, 'graph': graph}
 
 from inference_demo import views
