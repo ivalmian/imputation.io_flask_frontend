@@ -1,24 +1,40 @@
-from inference_demo import app, data_dictionary, dict_binaries, make_prediction
+from inference_demo import app, data_dictionary, binaries_dict, make_prediction
 
-
-from flask import render_template, request, jsonify
+from flask import render_template, request  # , jsonify
 from werkzeug.exceptions import HTTPException
 from inference_demo.forms import CensusImputeForm
+import numpy as np
 
 
 @app.route('/')
 @app.route('/web_app', methods=["GET", "POST"])
 def web_app():
     form = CensusImputeForm.make_form(data_dict=data_dictionary.data_dict,
-                                      numeric_fields=dict_binaries['numeric_mappers'].keys(),
-                                      recordname2description=dict_binaries['recordname2description'],
+                                      numeric_fields=binaries_dict['numeric_mappers'].keys(),
+                                      recordname2description=binaries_dict['recordname2description'],
                                       request_form=request.form)
+    pred_description = None
+
     if request.method == 'POST':
-        return jsonify(str(make_prediction.predict(request.form))), 200
-    #     #return jsonify(form.validate()),200
-       # return 'Form submitted successfully', 200
+        pred, inferred, all_keys = make_prediction.predict(request.form)
+        pred_description = dict()
+        for inferred_ind in inferred:
+            key = all_keys[inferred_ind]
+            ind2val = {i: (t[0],
+                           (data_dictionary.data_dict[t[0]].get(t[1], t[1])
+                            if t[0] in data_dictionary.data_dict else t[1]))
+                       for t, i in binaries_dict['val2ind'].items() if t[0] == key}
+            x, y = zip(*[(pred_desc[1], pred[0, inferred_ind, ind])
+                         for ind, pred_desc in ind2val.items()])
+            y = np.array(y) / sum(y)
+            pred_description[key] = {'x': list(x), 'y': list(y)}
+
     return render_template('webapp.html',
-                           form=form)
+                           form=form,
+                           pred_description=pred_description,
+                           description_dict=binaries_dict['recordname2description']
+
+                           )
 
 
 @app.route('/privacy')
@@ -42,4 +58,3 @@ def handle_error(e):
     if isinstance(e, HTTPException):
         code = e.code
     return render_template('error.html', error_code=code)
-

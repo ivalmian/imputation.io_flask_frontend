@@ -3,12 +3,15 @@
     <words>
       <w>conv</w>
       <w>crossentropy</w>
+      <w>datasets</w>
       <w>dropdown</w>
       <w>endblock</w>
+      <w>endfor</w>
       <w>gelu</w>
       <w>gtag</w>
       <w>hicov</w>
       <w>initializers</w>
+      <w>jsonify</w>
       <w>keepdims</w>
       <w>keras</w>
       <w>linkedin</w>

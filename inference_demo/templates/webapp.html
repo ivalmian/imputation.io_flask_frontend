@@ -17,7 +17,9 @@
 
     <!-- Census imputation form -->
 
-<div class="container-fluid p-3 w-50 border rounded border-dark">
+
+<div class="row justify-content-center m-2">
+<div class="col-lg-4 p-3 m-2  border rounded border-dark">
     <form action="{{ url_for('web_app')}}" method="POST" >
         {{ form.csrf_token }}
         {% if form.csrf_token.errors %}
@@ -54,5 +56,48 @@
     </form>
 </div>
 
+{% if pred_description %}
+
+
+
+<div class="col-lg-6 p-3 m-2 border rounded border-dark">
+    {% for key in pred_description.keys() %}
+    <div class="row p-3">
+        <canvas id="{{ key.lower() }}"></canvas>
+    </div>
+{% endfor %}
+</div>
+
+{% endif %}</div>
+
 <br><br>
+{% if pred_description %}
+<script>
+{% for key in pred_description.keys() %}
+var ctx = document.getElementById("{{ key.lower() }}");
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [{% for name in pred_description[key]['x'] %}
+                    "{{name}}",
+                {% endfor %}],
+        datasets: [{
+          label: '{{ description_dict[key] }}',
+          data: {{ pred_description[key]['y'] }},
+          maxBarThickness: 1,
+
+          borderWidth: 1
+        }]
+      },
+
+    });
+{% endfor %}
+    </script>
+{% endif %}
+{% if pred_description %}
+
+
+
+{% endif %}
+
 {% endblock %}
