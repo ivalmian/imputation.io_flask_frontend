@@ -29,10 +29,12 @@ def predict(form_data):
                                                   int(form_data[key])),
                                                  0))
 
-    pred_vector = np.array(pred_vector)
+    pred_vector_np = np.array(pred_vector)
 
-    inferred = np.argwhere(pred_vector == 0).flatten()
-    out = np.expand_dims(pred_vector, axis=0)
+    inferred = np.argwhere(pred_vector_np == 0).flatten()
+    out = np.expand_dims(pred_vector_np, axis=0)
+
+    pred = None
 
     if app.config['FLASK_ENV'] == 'dev':
         from inference_demo import graph, mdl, session
@@ -41,7 +43,19 @@ def predict(form_data):
         with graph.as_default():
             tf.keras.backend.set_session(session)
             pred = mdl.predict(out)
-    elif app.config['FLASK_ENV'] == 'prod':
-        raise NotImplementedError
 
-    return pred, inferred, all_keys
+    elif app.config['FLASK_ENV'] == 'prod':
+        import googleapiclient
+
+        service = googleapiclient.discovery.build('ml', 'v1')
+        name = f"projects/{app.config['PROJECT']}/models/{app.config['TF_MODEL']}"
+
+        instances = [{'input': pred_vector}]
+
+        pred = service.projects().predict(
+            name=name,
+            body={'instances': instances}
+        ).execute()
+        pred = np.expand_dims(np.array(pred['predictions'][0]['output']), axis=0)
+
+    return pred, inferred, all_keys, pred_vector

@@ -2,5 +2,9 @@ numpy
 wtforms
 werkzeug
 flask
-tensorflow==1.14
 dill
+flask_wtf
+
+google-python-cloud-debugger
+google-cloud-storage
+google-api-python-client

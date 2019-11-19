@@ -4,10 +4,13 @@ from flask import Flask
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('config')
-app.config.from_pyfile('config.py')
+
+try:
+    app.config.from_pyfile('config.py')
+except FileNotFoundError:
+    pass
 
 from inference_demo.load_binaries import load_binaries
-
 
 binaries_dict = load_binaries(app)
 
@@ -15,8 +18,8 @@ tf_binaries = None
 
 # setting up tf model in development, for production we call out to a model serving API
 if app.config['FLASK_ENV'] == 'dev':
-
     import os
+
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
     import tensorflow as tf
     from inference_demo import tf_model
