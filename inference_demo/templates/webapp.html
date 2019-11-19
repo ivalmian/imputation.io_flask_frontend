@@ -25,10 +25,12 @@
         <fieldset>
             <legend>Census imputation</legend>
             <div class="form-group">
+                {% if  form.csrf_token %}
                         {{ form.csrf_token }}
-        {% if form.csrf_token.errors %}
-            <div class="alert alert-danger">You have submitted an invalid CSRF token</div>
-        {% endif %}
+                        {% if form.csrf_token.errors %}
+                            <div class="alert alert-danger">You have submitted an invalid CSRF token</div>
+                        {% endif %}
+                {% endif %}
                 {% for field in form.field_list %}
                         <div class="p-2">
                         <div class="row p-1">

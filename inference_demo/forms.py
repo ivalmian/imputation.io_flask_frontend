@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, DecimalField, BooleanField
-from flask_wtf.csrf import CSRFProtect
-from inference_demo import app
+# from flask_wtf.csrf import CSRFProtect
+# from inference_demo import app
 # from wtforms.validators import DataRequired, Email
 
 
-csrf = CSRFProtect(app)
-csrf.init_app(app)
+# csrf = CSRFProtect(app)
+# csrf.init_app(app)
 
 
 class CensusImputeForm(FlaskForm):
@@ -26,7 +26,7 @@ class CensusImputeForm(FlaskForm):
             setattr(cls, 'mask_' + key, BooleanField(label='mask_' + key))
 
         if not request_form:
-            instance = cls()
+            instance = cls(csrf_enabled=False)
         else:
             instance = cls(request_form)
         instance.field_list = list()
