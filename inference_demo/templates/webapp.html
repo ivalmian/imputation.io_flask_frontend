@@ -9,9 +9,12 @@
 
         <h1>Imputation (<em>noun</em>):</h1><h2>The process of replacing missing data with substituted values.</h2>
         <br><br>
-        <p>Our team is developing deep learning solutions for imputing highly personalized data from partially known profiles.<br>
-          <br>
-          Want to know more? Contact us at <a href="mailto:learn@imputation.io">learn@imputation.io</a></p>
+        <p>This is an early/pre-alpha version of the census imputaiton model. It is trained on ~5 mil individuals in the 2012-2017 PUMS data.
+            You can enter as much (or as little) information into the census imputation form and submit.
+            What you will get back is a probability distribution on the unknown variables 
+            (mask input basically forces the model to use that element as an unknown variable, same as not entering a value).</p>
+        <p>For numeric entries: age is in years (max 95), income is in USD (max $350k), and commute time is in minutes (max 200)</p>
+         <p>Want to know more? Contact us at <a href="mailto:learn@imputation.io">learn@imputation.io</a></p>
 
     </div>
 
