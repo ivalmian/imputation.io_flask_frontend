@@ -6,6 +6,37 @@ from inference_demo.forms import CensusImputeForm
 from flask import render_template, request  # , jsonify
 from werkzeug.exceptions import HTTPException
 import numpy as np
+from collections import defaultdict
+
+
+def single_get_closest_value(num, data):
+    return data[num] if num in data else data[min(data.keys(), key=lambda k: abs(k - num))]
+
+
+def rem_duplicates(ts):
+    t_new = defaultdict(float)
+    for t in ts:
+        if not isinstance(t[0], str):
+            t_new[t[0]] += t[1]
+        else:
+            print(t)
+    return list(t_new.items())
+
+
+def smooth(x, y):
+    y = np.array(y)
+    x = np.array(x)
+    x_var = np.var(x)
+    var_scale = 0.08
+    dist = np.zeros((len(x), len(x)))
+    for i, x1 in enumerate(x):
+        for j, x2 in enumerate(x):
+            dist[i, j] = np.exp(-(x1-x2)**2/(var_scale*x_var))
+
+    for i in range(len(y)):
+        y[i] = (dist[i, :]*y).sum()/dist[i, :].sum()
+
+    return list(y)
 
 
 @app.route('/')
@@ -32,13 +63,21 @@ def web_app():
                        for t, i in binaries_dict['val2ind'].items() if t[0] == key}
             x, y = zip(*[(pred_desc[1], pred[0, inferred_ind, ind])
                          for ind, pred_desc in ind2val.items()])
-            y = np.array(y) / sum(y)
-            pred_description[key] = {'x': list(x), 'y': list(y)}
+            y = list(np.array(y) / sum(y))
+            x = list(x)
+            if key in binaries_dict['numeric_mappers'].keys():
+
+                x = [single_get_closest_value(e, binaries_dict['numeric_mappers'][key]['backward'])
+                     if isinstance(e, int) else e for e in x]
+                x, y = zip(*sorted(rem_duplicates(zip(x, y)), key=lambda t: t[0] if isinstance(t[0], int) else -1))
+                y = smooth(x, y)
+            pred_description[key] = {'x': x, 'y': list(y)}
 
     return render_template('webapp.html',
                            form=form,
                            pred_description=pred_description,
-                           description_dict=binaries_dict['recordname2description'])
+                           description_dict=binaries_dict['recordname2description'],
+                           numeric_keys=list(binaries_dict['numeric_mappers'].keys()))
 
 
 @app.route('/privacy')

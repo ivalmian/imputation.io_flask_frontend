@@ -2,11 +2,13 @@
 # Reads binaries for the ml model using paths in app.config and returns them
 
 # Binaries saved with dill
-import dill
 
+import dill
+import numpy
 
 def load_binaries(app):
-
+    import sys
+    sys.modules['np'] = numpy
     if app.config['FLASK_ENV'] == 'dev':
         with open(app.config['NUMERIC_MAPPER_PATH'], 'rb') as fin:
             numeric_mappers = dill.load(fin)

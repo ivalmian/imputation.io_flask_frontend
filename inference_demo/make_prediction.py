@@ -3,19 +3,23 @@ from inference_demo import app, binaries_dict
 import numpy as np
 
 
+def single_get_closest_value(num, data):
+    return data[num] if num in data else data[min(data.keys(), key=lambda k: abs(k - num))]
+
+
 def predict(form_data):
 
     pred_vector = list()
     all_keys = list()
     for key, mapper in binaries_dict['numeric_mappers'].items():
         all_keys.append(key)
-        if form_data.get('mask_'+key, 'n') == 'y':
+        if form_data.get('mask_'+key, 'n') == 'y' or not str(form_data[key]).isnumeric():
             pred_vector.append(0)
         else:
-
+            val = single_get_closest_value(float(form_data[key]), binaries_dict['numeric_mappers'][key]['forward'])
             pred_vector.append(
                 binaries_dict['val2ind'].get((key,
-                                              int(form_data[key])),
+                                              val),
                                              0))
 
     for key in binaries_dict['recordname2description'].keys():
