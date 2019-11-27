@@ -63,13 +63,23 @@ def web_app():
                        for t, i in binaries_dict['val2ind'].items() if t[0] == key}
             x, y = zip(*[(pred_desc[1], pred[0, inferred_ind, ind])
                          for ind, pred_desc in ind2val.items()])
+
             y = list(np.array(y) / sum(y))
             x = list(x)
             if key in binaries_dict['numeric_mappers'].keys():
 
                 x = [single_get_closest_value(e, binaries_dict['numeric_mappers'][key]['backward'])
                      if isinstance(e, int) else e for e in x]
+
                 x, y = zip(*sorted(rem_duplicates(zip(x, y)), key=lambda t: t[0] if isinstance(t[0], int) else -1))
+
+                x = np.asarray(x)
+                mid_w = np.zeros(len(x))
+                mid_w[0] = x[1]-x[0]
+                mid_w[-1] = (x[-1]-x[-2])
+                mid_w[1:-1] = (x[2:] - x[:-2])/2
+                y = y/mid_w
+
                 y = smooth(x, y)
             pred_description[key] = {'x': x, 'y': list(y)}
 

@@ -7,6 +7,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Demonstration app for imputing census data">
+    <meta name="author" content="Ilya Valmianski">
+
     <!-- Start imports -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151427866-1"></script>
@@ -32,8 +35,11 @@
     <!-- Charts.js dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
 
+    <!-- Custom scripts for this template -->
+    <script src="/static/js/clean-blog.js"></script>
+
     <!-- Custom additions CSS -->
-    <link rel="stylesheet" href="static/css/custom.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
 
     <!-- Finished imports-->
 
@@ -44,32 +50,50 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg fixed-top"  id="mainNav">
         <a class="navbar-brand brand-font" href="#">Imputation.io</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-   
+
               <ul class="navbar-nav">
                   {{ nav_link('web_app', 'Web app') }}
                   {{ nav_link('how_it_works', 'How it works') }}
                   {{ nav_link('about_api', 'Learn about the API') }}
 
               </ul>
-           
+
         </div>
       </nav>
+    <!-- Page Header -->
+    <header class="masthead"  style="background-image: url('/static/img/helloquence-5fNmWej4tAA-unsplash.jpg')">
+        <div class="overlay"></div>
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                  <div class="site-heading">
+                      {% block pagehead  %}
+                        <h1>Impute census data</h1>
+                      {% endblock %}
+
+                  </div>
+                </div>
+              </div>
+        </div>
+    </header>
+
 
     {% block body  %}
     <!-- Main content -->
     {% endblock %}
 
   <!-- Footer -->
-  <footer class="page-footer footer-link-text">
+  <footer class="page-footer footer-link-text footer-bg">
 
-      <!-- Social media -->   
-      <div class="d-flex justify-content-between footer-bg text-dark">
+      <!-- Social media -->
+
+      <div class="d-flex justify-content-between  text-dark p-2">
         <div class="socialMediaLinks p-3">
           <a href="https://www.facebook.com/sharer/sharer.php?u=imputation.io&t=Find personalized predictions in your data" target="_blank" title="Share on Facebook"><i class="fab fa-facebook-f  "></i></a>
           <a href="https://twitter.com/intent/tweet?source=imputation.io&text=Find personalized predictions in your data" target="_blank" title="Tweet"><i class="fab fa-twitter  "></i></a>
@@ -78,16 +102,22 @@
         </div>
       
         <div class="p-4">
-            <a href="privacy">Privacy</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:admin@imputation.io">Contact us</a>
+            <a href="privacy">Privacy</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:admin@imputation.io">Contact</a>
         </div>
-      </div>  
+    </div>
+
+       <!-- Copyright -->
+      <div class="footer-copyright d-flex justify-content-center">
+        © 2019 Copyright:&nbsp<a href="http://imputation.io">Imputation.io</a>
+      </div><br><br>
+
+
  
-      <!-- Copyright -->   
-      <div class="footer-copyright text-center p-3 ">
-        © 2019 Copyright: <a href="http://imputation.io">Imputation.io</a> 
-      </div>
+
 
     </footer>
+
+
 
 </body>
 
