@@ -14,7 +14,7 @@ from app.load_binaries import load_binaries
 
 binaries_dict = load_binaries(app)
 
-tf_binaries = None
+
 
 # setting up tf model in development, for production we call out to a model serving API
 if app.config['FLASK_ENV'] == 'dev':
@@ -33,6 +33,5 @@ if app.config['FLASK_ENV'] == 'dev':
 
         mdl.load_weights(filepath=app.config['SAVED_MODEL_PATH'])
 
-    tf_binaries = {'mdl': mdl, 'graph': graph}
 
 from app import views

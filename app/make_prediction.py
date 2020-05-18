@@ -2,19 +2,18 @@ import numpy as np
 from app.utils import single_get_closest_value
 
 
-
 class Predict():
 
-    def __init__(self,app,binaries_dict):
+    def __init__(self, app, binaries_dict):
         self.predictor = self._build_predictor(app)
         self.binaries_dict = binaries_dict
         return
 
-    #builds self.predictor based on this being a dev or prod env
-    def _build_predictor(self,app):
-        assert app.config['FLASK_ENV']=='dev' or app.config['FLASK_ENV']=='prod'
+    # builds self.predictor based on this being a dev or prod env
+    def _build_predictor(self, app):
+        assert app.config['FLASK_ENV'] == 'dev' or app.config['FLASK_ENV'] == 'prod'
 
-        if app.config['FLASK_ENV']=='dev':
+        if app.config['FLASK_ENV'] == 'dev':
 
             from app import graph, mdl, session
             import tensorflow as tf
@@ -26,7 +25,7 @@ class Predict():
                     pred = mdl.predict(inp_vec)
                 return pred
 
-        elif app.config['FLASK_ENV']=='prod':
+        elif app.config['FLASK_ENV'] == 'prod':
 
             import googleapiclient
 
@@ -40,14 +39,16 @@ class Predict():
                     name=name,
                     body={'instances': instances}
                 ).execute()
-                pred = np.expand_dims(np.array(pred['predictions'][0]['output']), axis=0)
+                pred = np.expand_dims(
+                    np.array(pred['predictions'][0]['output']), axis=0)
                 return pred
         else:
-            raise ValueError(f"Improper call to _build_predictor with env set to {app.config['FLASK_ENV']}")
+            raise ValueError(
+                f"Improper call to _build_predictor with env set to {app.config['FLASK_ENV']}")
 
         return predictor
 
-    def predict(self,data):
+    def predict(self, data):
         pred_vector = list()
         all_keys = list()
         for key, mapper in self.binaries_dict['numeric_mappers'].items():
@@ -55,11 +56,12 @@ class Predict():
             if data.get('mask_'+key, 'n') == 'y' or not str(data[key]).isnumeric():
                 pred_vector.append(0)
             else:
-                val = single_get_closest_value(float(data[key]), self.binaries_dict['numeric_mappers'][key]['forward'])
+                val = single_get_closest_value(
+                    float(data[key]), self.binaries_dict['numeric_mappers'][key]['forward'])
                 pred_vector.append(
                     self.binaries_dict['val2ind'].get((key,
-                                                val),
-                                                0))
+                                                       val),
+                                                      0))
 
         for key in self.binaries_dict['recordname2description'].keys():
             if key in data and key not in all_keys:
@@ -68,13 +70,12 @@ class Predict():
                     pred_vector.append(0)
                 else:
                     pred_vector.append(
-                         self.binaries_dict['val2ind'].get((key,
-                                                    int(data[key])),
-                                                    0))
+                        self.binaries_dict['val2ind'].get((key,
+                                                           int(data[key])),
+                                                          0))
 
         pred_vector_np = np.array(pred_vector)
         inferred = np.argwhere(pred_vector_np == 0).flatten()
 
         pred = self.predictor(pred_vector_np)
         return pred, inferred, all_keys, pred_vector
-

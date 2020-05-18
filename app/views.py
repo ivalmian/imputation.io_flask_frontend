@@ -6,16 +6,17 @@ from app.utils import single_get_closest_value, rem_duplicates, smooth
 from flask import render_template, request  # , jsonify
 from werkzeug.exceptions import HTTPException
 import numpy as np
-from collections import defaultdict
 
-clf = make_prediction.Predict(app,binaries_dict)
+clf = make_prediction.Predict(app, binaries_dict)
+
 
 @app.route('/')
 @app.route('/web_app', methods=["GET", "POST"])
 def web_app():
 
     form = CensusImputeForm.make_form(data_dict=data_dictionary.data_dict,
-                                      numeric_fields=binaries_dict['numeric_mappers'].keys(),
+                                      numeric_fields=binaries_dict['numeric_mappers'].keys(
+                                      ),
                                       recordname2description=binaries_dict['recordname2description'],
                                       request_form=request.form)
 
@@ -42,7 +43,8 @@ def web_app():
                 x = [single_get_closest_value(e, binaries_dict['numeric_mappers'][key]['backward'])
                      if isinstance(e, int) else e for e in x]
 
-                x, y = zip(*sorted(rem_duplicates(zip(x, y)), key=lambda t: t[0] if isinstance(t[0], int) else -1))
+                x, y = zip(*sorted(rem_duplicates(zip(x, y)),
+                                   key=lambda t: t[0] if isinstance(t[0], int) else -1))
 
                 x = np.asarray(x)
                 mid_w = np.zeros(len(x))
