@@ -1,4 +1,4 @@
-from inference_demo.version import __version__
+from app.version import __version__
 
 from flask import Flask
 
@@ -10,7 +10,7 @@ try:
 except FileNotFoundError:
     pass
 
-from inference_demo.load_binaries import load_binaries
+from app.load_binaries import load_binaries
 
 binaries_dict = load_binaries(app)
 
@@ -22,7 +22,7 @@ if app.config['FLASK_ENV'] == 'dev':
 
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
     import tensorflow as tf
-    from inference_demo import tf_model
+    from app import tf_model
 
     graph = tf.Graph()
     with graph.as_default():
@@ -35,4 +35,4 @@ if app.config['FLASK_ENV'] == 'dev':
 
     tf_binaries = {'mdl': mdl, 'graph': graph}
 
-from inference_demo import views
+from app import views

@@ -4,12 +4,11 @@
 # Binaries saved with dill
 
 import dill
-import numpy
+import numpy as np
 
 
 def load_binaries(app):
-    import sys
-    sys.modules['np'] = numpy
+
     if app.config['FLASK_ENV'] == 'dev':
         with open(app.config['NUMERIC_MAPPER_PATH'], 'rb') as fin:
             numeric_mappers = dill.load(fin)

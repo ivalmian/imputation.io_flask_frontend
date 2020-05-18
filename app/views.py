@@ -1,6 +1,6 @@
 # imports from our package
-from inference_demo import app, data_dictionary, binaries_dict, make_prediction
-from inference_demo.forms import CensusImputeForm
+from app import app, data_dictionary, binaries_dict, make_prediction
+from app.forms import CensusImputeForm
 
 # external imports
 from flask import render_template, request  # , jsonify

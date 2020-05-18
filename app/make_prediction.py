@@ -1,4 +1,4 @@
-from inference_demo import app, binaries_dict
+from app import app, binaries_dict
 
 import numpy as np
 
@@ -41,7 +41,7 @@ def predict(form_data):
     pred = None
 
     if app.config['FLASK_ENV'] == 'dev':
-        from inference_demo import graph, mdl, session
+        from app import graph, mdl, session
         import tensorflow as tf
 
         with graph.as_default():

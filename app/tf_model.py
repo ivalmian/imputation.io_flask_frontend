@@ -1,5 +1,5 @@
 #this is only called in dev
-from inference_demo import app
+from app import app
 assert app.config['FLASK_ENV'] == 'dev'
 
 #begin rest of code

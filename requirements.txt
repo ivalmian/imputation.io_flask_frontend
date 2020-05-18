@@ -4,6 +4,7 @@ werkzeug
 flask
 dill
 flask_wtf
+gunicorn
 
 google-python-cloud-debugger
 google-cloud-storage
