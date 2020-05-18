@@ -51,7 +51,7 @@ def web_app():
     pred_description = None
 
     if request.method == 'POST':
-        pred, inferred, all_keys, pred_vector = make_prediction.predict(request.form)
+        pred, inferred, all_keys, _ = make_prediction.predict(request.form)
         # return str(pred_vector), 200
         pred_description = dict()
 
