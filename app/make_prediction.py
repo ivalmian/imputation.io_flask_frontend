@@ -27,9 +27,9 @@ class Predict():
 
         elif app.config['FLASK_ENV'] == 'prod':
 
-            import googleapiclient
+            from googleapiclient.discovery import build
 
-            service = googleapiclient.discovery.build('ml', 'v1')
+            service = build('ml', 'v1')
             name = f"projects/{app.config['PROJECT']}/models/{app.config['TF_MODEL']}"
 
             def predictor(inp_vec):
