@@ -1,7 +1,6 @@
 import numpy as np
+from app.utils import single_get_closest_value
 
-def _single_get_closest_value(num, data):
-    return data[num] if num in data else data[min(data.keys(), key=lambda k: abs(k - num))]
 
 
 class Predict():
@@ -56,7 +55,7 @@ class Predict():
             if data.get('mask_'+key, 'n') == 'y' or not str(data[key]).isnumeric():
                 pred_vector.append(0)
             else:
-                val = _single_get_closest_value(float(data[key]), self.binaries_dict['numeric_mappers'][key]['forward'])
+                val = single_get_closest_value(float(data[key]), self.binaries_dict['numeric_mappers'][key]['forward'])
                 pred_vector.append(
                     self.binaries_dict['val2ind'].get((key,
                                                 val),
