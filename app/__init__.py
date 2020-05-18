@@ -1,4 +1,6 @@
+from app.load_binaries import load_binaries
 from app.version import __version__
+from app import make_prediction
 
 from flask import Flask
 
@@ -10,11 +12,8 @@ try:
 except FileNotFoundError:
     pass
 
-from app.load_binaries import load_binaries
 
 binaries_dict = load_binaries(app)
-
-
 
 # setting up tf model in development, for production we call out to a model serving API
 if app.config['FLASK_ENV'] == 'dev':
@@ -33,5 +32,6 @@ if app.config['FLASK_ENV'] == 'dev':
 
         mdl.load_weights(filepath=app.config['SAVED_MODEL_PATH'])
 
+clf = make_prediction.Predict(app, binaries_dict)
 
 from app import views

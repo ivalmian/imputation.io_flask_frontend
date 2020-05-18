@@ -1,13 +1,11 @@
 # imports from our package
-from app import app, data_dictionary, binaries_dict, make_prediction
+from app import app, data_dictionary, binaries_dict, clf
 from app.forms import CensusImputeForm
 from app.utils import single_get_closest_value, rem_duplicates, smooth
 # external imports
 from flask import render_template, request  # , jsonify
 from werkzeug.exceptions import HTTPException
 import numpy as np
-
-clf = make_prediction.Predict(app, binaries_dict)
 
 
 @app.route('/')
