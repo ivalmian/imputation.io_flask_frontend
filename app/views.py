@@ -8,6 +8,7 @@ from werkzeug.exceptions import HTTPException
 import numpy as np
 from collections import defaultdict
 
+clf = make_prediction.Predict(app,binaries_dict)
 
 def single_get_closest_value(num, data):
     return data[num] if num in data else data[min(data.keys(), key=lambda k: abs(k - num))]
@@ -51,7 +52,7 @@ def web_app():
     pred_description = None
 
     if request.method == 'POST':
-        pred, inferred, all_keys, _ = make_prediction.predict(request.form)
+        pred, inferred, all_keys, _ = clf.predict(request.form)
         # return str(pred_vector), 200
         pred_description = dict()
 
