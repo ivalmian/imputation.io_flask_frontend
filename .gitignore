@@ -2,6 +2,6 @@
 .idea
 __pycache__
 *.pyc
-/binaries
-/instance
+binaries
+instance
 .vscode
