@@ -2,10 +2,10 @@
 from app import app
 assert app.config['FLASK_ENV'] == 'dev'
 
-#begin rest of code
 
+#begin rest of code
 import tensorflow as tf
-from tensorflow.keras import models,layers,callbacks,metrics,backend, losses
+from tensorflow.keras import models,layers,callbacks,metrics,backend, losses #pylint: disable=import-error
 import numpy as np
 
 #from https://github.com/Separius/BERT-keras/blob/master/transformer/layers.py

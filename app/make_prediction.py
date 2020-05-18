@@ -6,7 +6,6 @@ import numpy as np
 def single_get_closest_value(num, data):
     return data[num] if num in data else data[min(data.keys(), key=lambda k: abs(k - num))]
 
-
 def predict(form_data):
 
     pred_vector = list()
