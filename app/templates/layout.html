@@ -50,7 +50,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg fixed-top"  id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg "  id="mainNav">
         <a class="navbar-brand brand-font" href="#">Imputation.io</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -66,22 +66,7 @@
 
         </div>
       </nav>
-    <!-- Page Header -->
-    <header class="masthead"  style="background-image: url('/static/img/helloquence-5fNmWej4tAA-unsplash.jpg')">
-        <div class="overlay"></div>
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                  <div class="site-heading">
-                      {% block pagehead  %}
-                        <h1>Impute census data</h1>
-                      {% endblock %}
-
-                  </div>
-                </div>
-              </div>
-        </div>
-    </header>
+    
 
 
     {% block body  %}

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macros.html" import plot_result with context %}
 
 {% block title %} Home@Imputation.io {% endblock %}
 
@@ -24,7 +25,7 @@
 
 
 <div class="row justify-content-center m-2">
-<div class="col-lg-4 p-3 m-2  border rounded border-dark">
+<div class="container border rounded border-dark m-3 p-2">
     <form action="{{ url_for('web_app', _anchor='results')}}" method="POST" >
 
         <fieldset>
@@ -51,6 +52,19 @@
                                 {{field[0](class_="form-control")}}
                             </div>
                         </div>
+                        {% if pred_description %}
+                            {% if field[0].id in pred_description %}
+                            <div class="row">
+                                <div class="col">
+                                 
+
+                                            <canvas id="{{ field[0].id.lower() }}"></canvas>
+                                        
+         
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endif %}
                         </div>
 
                 {% endfor %}
@@ -62,82 +76,16 @@
         </fieldset>
     </form>
 </div>
-
-{% if pred_description %}
-
-
-  <a id="results"></a>
-<div class="col-lg-6 p-3 m-2 border rounded border-dark">
-
-    {% for key in pred_description.keys() %}
-    <div class="row p-3">
-        <canvas id="{{ key.lower() }}"></canvas>
-    </div>
-{% endfor %}
 </div>
 
-{% endif %}</div>
 
-<br><br>
-{% if pred_description %}
+ {% if pred_description  %}
 <script>
-{% for key in pred_description.keys() %}
-    {% if key in numeric_keys %}
-        var ctx = document.getElementById("{{ key.lower() }}");
-            var myChart = new Chart(ctx, {
-              type: 'scatter',
-              data: {
-
-                datasets: [{
-                  label: '{{ description_dict[key] }}',
-                  data: [
-                    {% for i in range(pred_description[key]['y']|length) %}
-
-                            {x: {{ pred_description[key]['x'][i] }}, y: {{ pred_description[key]['y'][i] }} },
-
-                   {% endfor %} ],
-                   showLine: true,
-                   pointRadius: 0,
-                   backgroundColor: "#3e95cd"
-
-                  }],
-
-              },
-
-            });
-    {% else %}
-        var ctx = document.getElementById("{{ key.lower() }}");
-            var myChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: [{% for name in pred_description[key]['x'] %}
-                            "{{name}}",
-                        {% endfor %}],
-                datasets: [{
-                  label: '{{ description_dict[key] }}',
-                  data: {{ pred_description[key]['y'] }},
-                  backgroundColor: "#3e95cd"
-                  }],
-                options: {
-                    scales: {
-                        xAxes: [{
-                            barThickness: 1,  // number (pixels) or 'flex'
-                            maxBarThickness: 4 // number (pixels)
-                        }]
-                    }
-                }
-
-              },
-
-            });
-    {% endif %}
-{% endfor %}
-    </script>
+    {% for key in pred_description.keys() %}
+        {{ plot_result(pred_description, description_dict, numeric_keys, key) }}
+    {% endfor %}
+</script>
 {% endif %}
-{% if pred_description %}
 
-
-
-{% endif %}
 
 {% endblock %}

@@ -7,5 +7,60 @@
 {% endif %}
 {% endmacro %}
 
+{% macro plot_result(pred_description, description_dict, numeric_keys, key) %}
+
+{% if key in numeric_keys %}
+
+    var ctx = document.getElementById("{{ key.lower() }}");
+        var myChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+
+            datasets: [{
+                label: '{{ description_dict[key] }}',
+                data: [
+                {% for i in range(pred_description[key]['y']|length) %}
+
+                        {x: {{ pred_description[key]['x'][i] }}, y: {{ pred_description[key]['y'][i] }} },
+
+                {% endfor %} ],
+                showLine: true,
+                pointRadius: 0,
+                backgroundColor: "#3e95cd"
+
+                }],
+
+            },
+
+        });
+{% else %}
+    var ctx = document.getElementById("{{ key.lower() }}");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: [{% for name in pred_description[key]['x'] %}
+                        "{{name}}",
+                    {% endfor %}],
+            datasets: [{
+                label: '{{ description_dict[key] }}',
+                data: {{ pred_description[key]['y'] }},
+                backgroundColor: "#3e95cd"
+                }],
+            options: {
+                scales: {
+                    xAxes: [{
+                        barThickness: 1,  // number (pixels) or 'flex'
+                        maxBarThickness: 4 // number (pixels)
+                    }]
+                }
+            }
+
+            },
+
+        });
+{% endif %}
+
+
+{% endmacro %}
 
 
