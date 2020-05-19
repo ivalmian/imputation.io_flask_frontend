@@ -1,3 +1,4 @@
 *.dill
 /binaries
 /instance
+.vscode

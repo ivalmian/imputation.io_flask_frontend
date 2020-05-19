@@ -1,5 +1,5 @@
 import numpy as np
-from app.utils import single_get_closest_value
+from app.utils import single_get_closest_value, timenlog
 
 
 class Predict():
@@ -18,6 +18,7 @@ class Predict():
             from app import graph, mdl, session
             import tensorflow as tf
 
+            @timenlog
             def predictor(inp_vec):
                 inp_vec = np.expand_dims(inp_vec, axis=0)
                 with graph.as_default():
@@ -32,8 +33,9 @@ class Predict():
             service = build('ml', 'v1')
             name = f"projects/{app.config['PROJECT']}/models/{app.config['TF_MODEL']}"
 
+            @timenlog
             def predictor(inp_vec):
-                instances = [{'input': list(inp_vec)}]
+                instances = [{'input': inp_vec.astype(int).tolist()}]
 
                 pred = service.projects().predict(
                     name=name,

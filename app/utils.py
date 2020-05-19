@@ -1,5 +1,8 @@
 import numpy as np
 from collections import defaultdict
+from time import perf_counter
+import functools
+
 
 def single_get_closest_value(num, data):
     return data[num] if num in data else data[min(data.keys(), key=lambda k: abs(k - num))]
@@ -29,3 +32,17 @@ def smooth(x, y):
         y[i] = (dist[i, :]*y).sum()/dist[i, :].sum()
 
     return list(y)
+
+def timenlog(func):
+    from app import app
+    @functools.wraps(func)
+    def timenlogs_wrapper(*args,**kwargs):
+        s = perf_counter()
+        ret_val = func(*args,**kwargs)
+        e = perf_counter()
+        msg = f'{func.__name__} took {e-s} seconds to execute'
+        print(msg)
+        app.logger.info(msg) # pylint: disable=no-member
+
+        return ret_val
+    return timenlogs_wrapper
