@@ -1,4 +1,8 @@
 *.dill
-/binaries
-/instance
+.idea
+
+*.pyc
+binaries
+instance
 .vscode
+__pycache__
