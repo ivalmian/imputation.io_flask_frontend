@@ -8,3 +8,6 @@ def client():
 
     with app.test_client() as client:
         yield client
+
+def test_empty(client):
+    pass

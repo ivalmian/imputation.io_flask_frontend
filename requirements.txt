@@ -1,3 +1,4 @@
+#Shared google and dev
 numpy
 wtforms
 werkzeug
@@ -6,9 +7,7 @@ dill
 flask_wtf
 gunicorn
 
-coverage
-pytest
-
+#Google specific
 google-python-cloud-debugger
 google-cloud-storage
 google-api-python-client

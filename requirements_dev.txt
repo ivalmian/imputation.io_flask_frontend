@@ -1,0 +1,15 @@
+#Shared google and dev
+numpy
+wtforms
+werkzeug
+flask
+dill
+flask_wtf
+gunicorn
+
+#Dev testing
+coverage
+pytest
+
+#Dev tensorflow binding
+tensorflow
