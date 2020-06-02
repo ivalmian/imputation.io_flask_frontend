@@ -6,6 +6,9 @@ dill
 flask_wtf
 gunicorn
 
+coverage
+pytest
+
 google-python-cloud-debugger
 google-cloud-storage
 google-api-python-client
