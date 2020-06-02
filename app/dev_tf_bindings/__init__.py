@@ -11,7 +11,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 graph = tf.Graph()
 with graph.as_default():
-    session = tf.keras.backend.get_session()
+    session =  tf.compat.v1.keras.backend.get_session()
     mdl = tf_model.full_model(seq_len=11,
                               vocab_size=len(binaries_dict['val2ind']),
                               num_layers=4)

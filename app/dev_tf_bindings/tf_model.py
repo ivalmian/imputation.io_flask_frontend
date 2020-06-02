@@ -37,17 +37,6 @@ class Gelu(layers.Layer):
     def get_config(self):
         return super().get_config()
 
-
-def masked_crossentropy(y_true,y_pred):
-    return tf.reduce_mean(
-        losses.CategoricalCrossentropy(
-            reduction=losses.Reduction.NONE
-        )(y_true, y_pred)*tf.dtypes.cast(y_true[:,:,0]==tf.dtypes.cast(0,tf.float32),tf.float32))
-
-
-
-
-
 def full_model(seq_len,
                vocab_size,
                embedding_dim = 128,

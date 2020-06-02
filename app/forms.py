@@ -25,10 +25,8 @@ class CensusImputeForm(FlaskForm):
                                           choices=[(-1, 'None selected')]+list(data_dict[key].items())))
             setattr(cls, 'mask_' + key, BooleanField(label='mask_' + key))
 
-        if not request_form:
-            instance = cls(csrf_enabled=False)
-        else:
-            instance = cls(request_form)
+       
+        instance = cls(request_form)
         instance.field_list = list()
 
         for key in numeric_fields:

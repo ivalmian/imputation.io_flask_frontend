@@ -21,7 +21,7 @@ class Predict():
             def predictor(inp_vec):
                 inp_vec = np.expand_dims(inp_vec, axis=0)
                 with graph.as_default():
-                    tf.keras.backend.set_session(session)
+                    tf.compat.v1.keras.backend.set_session(session)
                     pred = mdl.predict(inp_vec)
                 return pred
 
