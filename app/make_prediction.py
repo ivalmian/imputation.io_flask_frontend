@@ -14,9 +14,8 @@ class Predict():
         assert app.config['FLASK_ENV'] == 'dev' or app.config['FLASK_ENV'] == 'prod'
 
         if app.config['FLASK_ENV'] == 'dev':
-
-            from app import graph, mdl, session
-            import tensorflow as tf
+            
+            from app.dev_tf_bindings import tf, graph, mdl, session
 
             @timenlog
             def predictor(inp_vec):
