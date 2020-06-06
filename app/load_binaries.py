@@ -9,7 +9,7 @@ import numpy as np
 
 def load_binaries(app):
 
-    if app.config['FLASK_ENV'] == 'dev':
+    if app.config['FLASK_ENV'] == 'dev': 
         with open(app.config['NUMERIC_MAPPER_PATH'], 'rb') as fin:
             numeric_mappers = dill.load(fin)
         with open(app.config['DATA_COLUMNS_PATH'], 'rb') as fin:
@@ -19,7 +19,7 @@ def load_binaries(app):
         with open(app.config['RECORD_DESCRIPTION_PATH'], 'rb') as fin:
             recordname2description = dill.load(fin)
 
-    elif app.config['FLASK_ENV'] == 'prod':
+    elif app.config['FLASK_ENV'] == 'prod': #pragma: no cover
 
         from google.cloud import storage
 

@@ -13,8 +13,7 @@ import numpy as np
 def web_app():
 
     form = CensusImputeForm.make_form(data_dict=data_dictionary.data_dict,
-                                      numeric_fields=binaries_dict['numeric_mappers'].keys(
-                                      ),
+                                      numeric_fields=binaries_dict['numeric_mappers'].keys(),
                                       recordname2description=binaries_dict['recordname2description'],
                                       request_form=request.form)
 
@@ -81,4 +80,4 @@ def handle_error(e):
     code = 500
     if isinstance(e, HTTPException):
         code = e.code
-    return render_template('error.html', error_code=code)
+    return render_template('error.html', error_code=code), code

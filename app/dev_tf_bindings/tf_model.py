@@ -4,7 +4,7 @@ import numpy as np
 
 #from https://github.com/Separius/BERT-keras/blob/master/transformer/layers.py
 
-class LayerNormalization(layers.Layer):
+class LayerNormalization(layers.Layer):  #pragma: no cover
     def __init__(self, eps: float = 1e-5, **kwargs) -> None:
         self.eps = eps
         super().__init__(**kwargs)
@@ -14,7 +14,7 @@ class LayerNormalization(layers.Layer):
         self.beta = self.add_weight(name='beta', shape=input_shape[-1:], trainable=True)
         super().build(input_shape)
 
-    def call(self, x, **kwargs):
+    def call(self, x, **kwargs): 
         u = backend.mean(x, axis=-1, keepdims=True)
         s = backend.mean(backend.square(x - u), axis=-1, keepdims=True)
         z = (x - u) / backend.sqrt(s + self.eps)
@@ -31,7 +31,7 @@ class LayerNormalization(layers.Layer):
         return dict(list(base_config.items()) + list(config.items()))
 
 
-class Gelu(layers.Layer):
+class Gelu(layers.Layer): #pragma: no cover
     def call(self, inputs, **kwargs):
         return inputs * 0.5 * (1.0 + tf.math.erf(inputs / np.sqrt(2.0)))
     def get_config(self):

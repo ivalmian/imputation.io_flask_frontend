@@ -25,7 +25,7 @@ class Predict():
                     pred = mdl.predict(inp_vec)
                 return pred
 
-        elif app.config['FLASK_ENV'] == 'prod':
+        elif app.config['FLASK_ENV'] == 'prod': #pragma: no cover
 
             from googleapiclient.discovery import build
 
@@ -43,7 +43,7 @@ class Predict():
                 pred = np.expand_dims(
                     np.array(pred['predictions'][0]['output']), axis=0)
                 return pred
-        else:
+        else: 
             raise ValueError(
                 f"Improper call to _build_predictor with env set to {app.config['FLASK_ENV']}")
 

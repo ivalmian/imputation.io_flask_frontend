@@ -2,7 +2,7 @@ from app.dev_tf_bindings import tf_model
 import tensorflow as tf
 from app import app, binaries_dict
 
-if app.config['FLASK_ENV'] != 'dev':
+if app.config['FLASK_ENV'] != 'dev': #pragma: no cover
     raise ValueError(f"Members of app.dev_env can only be called if "
                      "app.config['FLASK_ENV']=='dev', instead it is {app.config['FLASK_ENV']}")
 
