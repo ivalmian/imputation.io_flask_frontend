@@ -9,7 +9,7 @@ app.config.from_object('config')
 
 try:
     app.config.from_pyfile('config.py')
-except FileNotFoundError:
+except FileNotFoundError: #pragma: no cover
     pass
 
 
