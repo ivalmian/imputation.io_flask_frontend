@@ -1,4 +1,6 @@
 '''
+app.__main__
+-------------------
 Flask debug runner.
 
 Normally should use 

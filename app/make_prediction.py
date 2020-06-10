@@ -1,3 +1,9 @@
+'''
+app.make_prediction
+-------------------
+Create a predictor. In dev use local tf bindings, in prod use google api
+'''
+
 import numpy as np
 from app.utils import single_get_closest_value, timenlog
 

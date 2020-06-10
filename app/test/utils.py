@@ -1,6 +1,12 @@
+'''
+app.test.utils
+-------------------
+Random utilities used by test code that are not dependent on other application components
+'''
+
 from numpy.random import choice
 
-def make_from_data( data_dict, numeric_fields):
+def make_form_data( data_dict, numeric_fields):
  
     data = dict()
 

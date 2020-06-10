@@ -1,4 +1,6 @@
 '''
+app.__init__
+-------------------
 Author: Ilya Valmianski
 Email: ivalmian@gmail.com
 -------------------

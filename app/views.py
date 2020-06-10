@@ -1,3 +1,9 @@
+'''
+app.views
+-------------------
+Define routes render by flask
+'''
+
 # imports from our package
 from app import app, data_dictionary, binaries_dict, clf, census_form
 from app.utils import single_get_closest_value, rem_duplicates, smooth

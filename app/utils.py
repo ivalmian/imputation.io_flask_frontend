@@ -1,3 +1,9 @@
+'''
+app.utils
+-------------------
+Random utilities that are not dependent on other application components
+'''
+
 import numpy as np
 from collections import defaultdict
 from time import perf_counter

@@ -1,6 +1,10 @@
-import app 
-import app.test as test
-from app.test import client
+'''
+app.test.test_views_functional
+-------------------
+Functional tests to see that all views return appropraitely
+'''
+
+from app.test import client, make_form_data, data_dictionary, binaries_dict, NUM_FUZZY_TRIES
 
 from flask import request
 
@@ -36,9 +40,9 @@ def test_route_none_get(client):
 
 def test_route_webapp_post(client):
     
-    for _ in range(test.NUM_FUZZY_TRIES): #make_from_data randomly generates data, we do several runs
-        data = test.make_from_data(data_dict=app.data_dictionary.data_dict,
-                                        numeric_fields=app.binaries_dict['numeric_mappers'].keys())
+    for _ in range(NUM_FUZZY_TRIES): #make_from_data randomly generates data, we do several runs
+        data = make_form_data(data_dict=data_dictionary.data_dict,
+                              numeric_fields=binaries_dict['numeric_mappers'].keys())
         rv = client.post('/web_app',data=data)
         assert rv.status_code==200
         assert "Imputation.io" in rv.data.decode()

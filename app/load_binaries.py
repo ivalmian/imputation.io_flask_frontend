@@ -1,7 +1,10 @@
-# load_binaries.py
-# Reads binaries for the ml model using paths in app.config and returns them
+'''
+app.load_binaries
+-------------------
+Reads binaries for the ml model using paths in app.config and returns them
 
-# Binaries saved with dill
+Binaries saved with dill
+'''
 
 import dill
 import numpy as np
