@@ -1,6 +1,5 @@
 # imports from our package
-from app import app, data_dictionary, binaries_dict, clf
-from app.forms import CensusImputeForm
+from app import app, data_dictionary, binaries_dict, clf, census_form
 from app.utils import single_get_closest_value, rem_duplicates, smooth
 # external imports
 from flask import render_template, request  # , jsonify
@@ -8,14 +7,12 @@ from werkzeug.exceptions import HTTPException
 import numpy as np
 
 
+
 @app.route('/')
 @app.route('/web_app', methods=["GET", "POST"])
 def web_app():
 
-    form = CensusImputeForm.make_form(data_dict=data_dictionary.data_dict,
-                                      numeric_fields=binaries_dict['numeric_mappers'].keys(),
-                                      recordname2description=binaries_dict['recordname2description'],
-                                      request_form=request.form)
+    form = census_form.get_instance(request_form=request.form)
 
     pred_description = None
 
