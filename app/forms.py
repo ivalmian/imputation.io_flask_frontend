@@ -1,12 +1,9 @@
+'''
+Define form. TODO: Make the form get generate once then instantiate multiple times
+'''
+
 from flask_wtf import FlaskForm
 from wtforms import SelectField, DecimalField, BooleanField
-# from flask_wtf.csrf import CSRFProtect
-# from inference_demo import app
-# from wtforms.validators import DataRequired, Email
-
-
-# csrf = CSRFProtect(app)
-# csrf.init_app(app)
 
 
 class CensusImputeForm(FlaskForm):
