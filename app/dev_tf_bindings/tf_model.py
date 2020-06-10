@@ -1,3 +1,9 @@
+'''
+app.dev_tf_bindings.tf_model
+-------------------
+Definition of tf model used by direct tf bindings
+'''
+
 import tensorflow as tf
 from tensorflow.keras import models,layers,callbacks,metrics,backend, losses #pylint: disable=import-error
 import numpy as np

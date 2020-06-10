@@ -1,5 +1,9 @@
-# data_dictionary.py
-# Provides a data dictionary for discrete values
+'''
+app.data_dictionary
+-------------------
+Provides a data dictionary for discrete values
+'''
+
 
 data_dict = {
 

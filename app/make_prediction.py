@@ -1,19 +1,25 @@
+'''
+app.make_prediction
+-------------------
+Create a predictor. In dev use local tf bindings, in prod use google api
+'''
+
 import numpy as np
 from app.utils import single_get_closest_value, timenlog
 
 
 class Predict():
 
-    def __init__(self, app, binaries_dict):
-        self.predictor = self._build_predictor(app)
+    def __init__(self, config, binaries_dict):
+        self.predictor = self._build_predictor(config)
         self.binaries_dict = binaries_dict
         return
 
     # builds self.predictor based on this being a dev or prod env
-    def _build_predictor(self, app):
-        assert app.config['FLASK_ENV'] == 'dev' or app.config['FLASK_ENV'] == 'prod'
+    def _build_predictor(self, config):
+        assert config['FLASK_ENV'] == 'dev' or config['FLASK_ENV'] == 'prod'
 
-        if app.config['FLASK_ENV'] == 'dev':
+        if config['FLASK_ENV'] == 'dev':
             
             from app.dev_tf_bindings import tf, graph, mdl, session
 
@@ -25,12 +31,12 @@ class Predict():
                     pred = mdl.predict(inp_vec)
                 return pred
 
-        elif app.config['FLASK_ENV'] == 'prod': #pragma: no cover
+        elif config['FLASK_ENV'] == 'prod': #pragma: no cover
 
             from googleapiclient.discovery import build
 
             service = build('ml', 'v1')
-            name = f"projects/{app.config['PROJECT']}/models/{app.config['TF_MODEL']}"
+            name = f"projects/{config['PROJECT']}/models/{config['TF_MODEL']}"
 
             @timenlog
             def predictor(inp_vec):
@@ -45,7 +51,7 @@ class Predict():
                 return pred
         else: 
             raise ValueError(
-                f"Improper call to _build_predictor with env set to {app.config['FLASK_ENV']}")
+                f"Improper call to _build_predictor with env set to {config['FLASK_ENV']}")
 
         return predictor
 

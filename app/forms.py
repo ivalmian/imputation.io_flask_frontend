@@ -1,18 +1,33 @@
+'''
+forms.py
+-------------------
+Define form in _CensusImputeForm, create instances using CensusImputeForm
+'''
+
 from flask_wtf import FlaskForm
 from wtforms import SelectField, DecimalField, BooleanField
-# from flask_wtf.csrf import CSRFProtect
-# from inference_demo import app
-# from wtforms.validators import DataRequired, Email
 
+class CensusImputeForm():
+    def __init__(self, data_dict, numeric_fields, recordname2description):
+        self.form_class = _CensusImputeForm.make_form(data_dict, numeric_fields, recordname2description)
+        self.numeric_fields = numeric_fields
+        self.data_dict = data_dict
 
-# csrf = CSRFProtect(app)
-# csrf.init_app(app)
+    def get_instance(self,request_form=None):
+        instance = self.form_class(request_form)
+        instance.field_list = list()
 
+        for key in self.numeric_fields:
+            instance.field_list.append((getattr(instance, key), getattr(instance, 'mask_' + key)))
 
-class CensusImputeForm(FlaskForm):
+        for key in self.data_dict:
+            instance.field_list.append((getattr(instance, key), getattr(instance, 'mask_' + key)))
+        return instance
 
+class _CensusImputeForm(FlaskForm):
+    #Creates a form with all the right fields
     @classmethod
-    def make_form(cls, data_dict, numeric_fields, recordname2description, request_form=None):
+    def make_form(cls, data_dict, numeric_fields, recordname2description):
 
         for key in numeric_fields:
 
@@ -25,14 +40,4 @@ class CensusImputeForm(FlaskForm):
                                           choices=[(-1, 'None selected')]+list(data_dict[key].items())))
             setattr(cls, 'mask_' + key, BooleanField(label='mask_' + key))
 
-       
-        instance = cls(request_form)
-        instance.field_list = list()
-
-        for key in numeric_fields:
-            instance.field_list.append((getattr(instance, key), getattr(instance, 'mask_' + key)))
-
-        for key in data_dict:
-            instance.field_list.append((getattr(instance, key), getattr(instance, 'mask_' + key)))
-
-        return instance
+        return cls
