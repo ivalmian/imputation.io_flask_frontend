@@ -1,7 +1,15 @@
 '''
 app.make_prediction
 -------------------
-Create a predictor. In dev use local tf bindings, in prod use google api
+
+Implements two classes
+
+Predict
+    Create a predictor. In dev use local tf bindings, in prod use google api
+
+MakePrediction
+    Transforms the output of Predict.predict into pred_description that can be rendered
+
 '''
 
 import numpy as np
@@ -20,7 +28,7 @@ class Predict():
         assert config['FLASK_ENV'] == 'dev' or config['FLASK_ENV'] == 'prod'
 
         if config['FLASK_ENV'] == 'dev':
-            
+
             from app.dev_tf_bindings import tf, graph, mdl, session
 
             @timenlog
@@ -31,7 +39,7 @@ class Predict():
                     pred = mdl.predict(inp_vec)
                 return pred
 
-        elif config['FLASK_ENV'] == 'prod': #pragma: no cover
+        elif config['FLASK_ENV'] == 'prod':  # pragma: no cover
 
             from googleapiclient.discovery import build
 
@@ -49,7 +57,7 @@ class Predict():
                 pred = np.expand_dims(
                     np.array(pred['predictions'][0]['output']), axis=0)
                 return pred
-        else: 
+        else:
             raise ValueError(
                 f"Improper call to _build_predictor with env set to {config['FLASK_ENV']}")
 
@@ -62,7 +70,7 @@ class Predict():
         ---
         data: dict
             Form data. See form made by .forms.CensusImputeForm
-        
+
         Returns
         ---
         pred: np.ndarray[float]
@@ -107,14 +115,14 @@ class Predict():
         return pred, inferred, all_keys, pred_vector
 
 
-
 class MakePrediction():
 
     def __init__(self, clf, data_dict, binaries_dict):
         self.clf = clf
         self.data_dict = data_dict
         self.binaries_dict = binaries_dict
-        
+
+    # TODO: this was whole-sale taken from view.web_app, but might need to be further refactored
     def __call__(self, form_data):
 
         pred, inferred, all_keys, _ = self.clf.predict(form_data)

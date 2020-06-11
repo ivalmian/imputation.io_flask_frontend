@@ -30,9 +30,13 @@ except FileNotFoundError: #pragma: no cover
     pass
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
+
+# load data
 binaries_dict = load_binaries.load_binaries(app.config)
+# initialize predictors
 clf = make_prediction.Predict(app.config, binaries_dict)
 predictor = make_prediction.MakePrediction(clf, data_dictionary.data_dict, binaries_dict)
+# form object
 census_form = forms.CensusImputeForm(data_dict=data_dictionary.data_dict,
                                       numeric_fields=binaries_dict['numeric_mappers'].keys(),
                                       recordname2description=binaries_dict['recordname2description'])
