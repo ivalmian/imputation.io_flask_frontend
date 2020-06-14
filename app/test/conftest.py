@@ -1,10 +1,15 @@
 '''
-app.test.utils
+app.test.conftest
 -------------------
-Random utilities used by test code that are not dependent on other application components
+Utilities and configuration for testing
 '''
 
+import pytest
+from app import app
 from numpy.random import choice
+
+
+NUM_FUZZY_TRIES = 10 #how many times to try random input
 
 def make_form_data( data_dict, numeric_fields):
  
@@ -21,3 +26,11 @@ def make_form_data( data_dict, numeric_fields):
         data['mask_' + key]=choice(['y','n'])
 
     return data
+
+
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    
+    with app.test_client() as client:
+       yield client

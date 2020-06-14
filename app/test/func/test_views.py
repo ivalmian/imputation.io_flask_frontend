@@ -1,10 +1,11 @@
 '''
-app.test.test_views_functional
+app.test.func.test_views
 -------------------
 Functional tests to see that all views return appropraitely
 '''
 
-from app.test import client, make_form_data, data_dictionary, binaries_dict, NUM_FUZZY_TRIES
+from app.test.conftest import client, make_form_data, NUM_FUZZY_TRIES
+from app import data_dictionary, binaries_dict
 
 from flask import request
 

@@ -21,7 +21,7 @@ app = Flask(__name__, instance_relative_config=True)
 # Load config
 # TODO: should be loading from google secret storage if in prod, in dev secrets are in instance/config.py
 
-app.config.from_object('config') #prod config
+app.config.from_object('app.config') #prod config
 
 try:
     app.config.from_pyfile('config.py') #dev config overrides prod
