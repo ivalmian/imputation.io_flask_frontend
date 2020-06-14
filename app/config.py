@@ -1,5 +1,9 @@
-# config.py global config
+'''
+app.config
+-------------------
+Prod config, can be overwritten by instance/config.py when present
 
+'''
 
 # non-instance config is for prod
 FLASK_ENV = "prod"

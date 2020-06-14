@@ -1,3 +1,10 @@
+'''
+app.secrets
+-------------------
+Gets secrets from google cloud secret manager. Relies on proper IAM
+
+'''
+
 from google.cloud import secretmanager
 
 def csrf_key(config):

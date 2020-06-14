@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.version import __version__
 
 # These imports are used during initialization
-from app import make_prediction, data_dictionary, load_binaries, forms, get_secrets
+from app import make_prediction, data_dictionary, load_binaries, forms, secrets
 
 # The app is born
 app = Flask(__name__, instance_relative_config=True)
@@ -24,7 +24,7 @@ app = Flask(__name__, instance_relative_config=True)
 
 app.config.from_object('app.config') #prod config
 
-app.config['SECRET_KEY'] = get_secrets.csrf_key(app.config)
+app.config['SECRET_KEY'] = secrets.csrf_key(app.config)
 
 try:
     app.config.from_pyfile('config.py') #dev config overrides prod
