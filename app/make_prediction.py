@@ -44,7 +44,7 @@ class Predict():
             from googleapiclient.discovery import build
 
             service = build('ml', 'v1')
-            name = f"projects/{config['PROJECT']}/models/{config['TF_MODEL']}"
+            name = f"projects/{config['PROJECT_NAME']}/models/{config['TF_MODEL']}"
 
             @timenlog
             def predictor(inp_vec):
