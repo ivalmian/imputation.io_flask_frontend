@@ -6,6 +6,8 @@ flask
 dill
 flask_wtf
 gunicorn
+flask_sqlalchemy
+sqlalchemy
 
 #Dev testing
 coverage

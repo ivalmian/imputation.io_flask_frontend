@@ -9,6 +9,7 @@ Front end for imputation.io using Flask
 '''
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 from app.version import __version__
 
@@ -30,6 +31,9 @@ except FileNotFoundError: #pragma: no cover
     pass
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
+
+# db connection
+db = SQLAlchemy(app)
 
 # load data
 binaries_dict = load_binaries.load_binaries(app.config)

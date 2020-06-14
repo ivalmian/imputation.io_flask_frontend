@@ -6,6 +6,7 @@ flask
 dill
 flask_wtf
 gunicorn
+flask_sqlalchemy
 
 #Google specific
 google-python-cloud-debugger
