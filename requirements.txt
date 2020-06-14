@@ -1,4 +1,4 @@
-#Shared google and dev
+#Various vendor
 numpy
 wtforms
 werkzeug
@@ -6,8 +6,15 @@ flask
 dill
 flask_wtf
 gunicorn
+flask_sqlalchemy
+sqlalchemy
 
 #Google specific
 google-python-cloud-debugger
 google-cloud-storage
 google-api-python-client
+google-cloud-secret-manager
+
+#Testing
+coverage
+pytest

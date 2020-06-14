@@ -15,6 +15,8 @@ MakePrediction
 import numpy as np
 from app.utils import single_get_closest_value, timenlog, rem_duplicates, smooth
 
+from googleapiclient.discovery import build
+
 
 class Predict():
 
@@ -27,39 +29,23 @@ class Predict():
     def _build_predictor(self, config):
         assert config['FLASK_ENV'] == 'dev' or config['FLASK_ENV'] == 'prod'
 
-        if config['FLASK_ENV'] == 'dev':
+        
 
-            from app.dev_tf_bindings import tf, graph, mdl, session
+        service = build('ml', 'v1')
+        name = f"projects/{config['PROJECT_NAME']}/models/{config['TF_MODEL']}"
 
-            @timenlog
-            def predictor(inp_vec):
-                inp_vec = np.expand_dims(inp_vec, axis=0)
-                with graph.as_default():
-                    tf.compat.v1.keras.backend.set_session(session)
-                    pred = mdl.predict(inp_vec)
-                return pred
+        @timenlog
+        def predictor(inp_vec):
+            instances = [{'input': inp_vec.astype(int).tolist()}]
 
-        elif config['FLASK_ENV'] == 'prod':  # pragma: no cover
-
-            from googleapiclient.discovery import build
-
-            service = build('ml', 'v1')
-            name = f"projects/{config['PROJECT']}/models/{config['TF_MODEL']}"
-
-            @timenlog
-            def predictor(inp_vec):
-                instances = [{'input': inp_vec.astype(int).tolist()}]
-
-                pred = service.projects().predict(
-                    name=name,
-                    body={'instances': instances}
-                ).execute()
-                pred = np.expand_dims(
-                    np.array(pred['predictions'][0]['output']), axis=0)
-                return pred
-        else:
-            raise ValueError(
-                f"Improper call to _build_predictor with env set to {config['FLASK_ENV']}")
+            pred = service.projects().predict(  # pylint: disable=no-member
+                name=name,
+                body={'instances': instances}
+            ).execute()
+            pred = np.expand_dims(
+                np.array(pred['predictions'][0]['output']), axis=0)
+            return pred
+      
 
         return predictor
 
@@ -91,7 +77,7 @@ class Predict():
                 pred_vector.append(0)
             else:
                 val = single_get_closest_value(
-                    float(data[key]), self.binaries_dict['numeric_mappers'][key]['forward'])
+                    float(data[key]), mapper['forward'])
                 pred_vector.append(
                     self.binaries_dict['val2ind'].get((key,
                                                        val),

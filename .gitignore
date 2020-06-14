@@ -10,3 +10,4 @@ __pycache__
 .coverage
 .tox
 .mypy_cache
+gcloud_credential

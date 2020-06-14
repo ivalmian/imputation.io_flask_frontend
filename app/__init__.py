@@ -9,11 +9,12 @@ Front end for imputation.io using Flask
 '''
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 from app.version import __version__
 
 # These imports are used during initialization
-from app import make_prediction, data_dictionary, load_binaries, forms
+from app import make_prediction, data_dictionary, load_binaries, forms, get_secrets
 
 # The app is born
 app = Flask(__name__, instance_relative_config=True)
@@ -23,6 +24,8 @@ app = Flask(__name__, instance_relative_config=True)
 
 app.config.from_object('app.config') #prod config
 
+app.config['SECRET_KEY'] = get_secrets.csrf_key(app.config)
+
 try:
     app.config.from_pyfile('config.py') #dev config overrides prod
     assert app.config['FLASK_ENV']!='prod' #should never have instance.config in prod
@@ -30,6 +33,9 @@ except FileNotFoundError: #pragma: no cover
     pass
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
+
+# db connection
+# db = SQLAlchemy(app)
 
 # load data
 binaries_dict = load_binaries.load_binaries(app.config)

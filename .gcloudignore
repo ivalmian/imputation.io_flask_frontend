@@ -6,6 +6,7 @@ binaries
 instance
 .vscode
 __pycache__
+gcloud_credential
 .pytest_cache
 .coverage
 .tox
