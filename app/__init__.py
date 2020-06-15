@@ -34,8 +34,11 @@ except FileNotFoundError: #pragma: no cover
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
 
+print(app.config) 
 # db connection
-# db = SQLAlchemy(app)
+if app.config['FLASK_ENV']=='dev':
+    db = SQLAlchemy(app)
+    from app import models
 
 # load data
 binaries_dict = load_binaries.load_binaries(app.config)
