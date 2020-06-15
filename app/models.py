@@ -6,20 +6,7 @@ HASH_STRING_SIZE = 128
 COMMENT_STRING_SIZE = 1000
 EMAIL_STRING_SIZE = 254
 
-class User(db.Model):
-    hash_id = db.Column(db.String(HASH_STRING_SIZE), primary_key= True)
-    fingerprint = db.Column(db.JSON)
 
-    def __repr__(self):
-        return f'<User with hash {self.hash_id}>' 
-
-class CensusImputation(db.Model):
-    hash_id = db.Column(db.String(HASH_STRING_SIZE),primary_key= True)
-    input_object = db.Column(db.JSON)
-    output_object = db.Column(db.JSON)
-
-    def __repr__(self):
-        return f'<Census imputation with hash {self.hash_id}>' 
 
 class Comment(db.Model):
     id = db.Column(db.Integer,primary_key=True, autoincrement = True)
@@ -45,3 +32,17 @@ class CensusImputationRequest(db.Model):
     def __repr__(self):
         return f'<Imputation request {self.id}>' 
     
+class User(db.Model):
+    hash_id = db.Column(db.String(HASH_STRING_SIZE), primary_key= True)
+    fingerprint = db.Column(db.JSON)
+
+    def __repr__(self):
+        return f'<User with hash {self.hash_id}>' 
+
+class CensusImputation(db.Model):
+    hash_id = db.Column(db.String(HASH_STRING_SIZE),primary_key= True)
+    input_object = db.Column(db.JSON)
+    output_object = db.Column(db.JSON)
+
+    def __repr__(self):
+        return f'<Census imputation with hash {self.hash_id}>' 

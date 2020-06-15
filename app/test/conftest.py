@@ -5,7 +5,7 @@ Utilities and configuration for testing
 '''
 
 import pytest
-from app import app
+from app import app, db
 from numpy.random import choice
 
 
@@ -33,4 +33,10 @@ def client():
     app.config['TESTING'] = True
     
     with app.test_client() as client:
-       yield client
+        with app.app_context():
+            db.create_all()
+        yield client
+
+    db.drop_all()
+
+

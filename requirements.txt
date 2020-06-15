@@ -9,6 +9,9 @@ gunicorn
 flask_sqlalchemy
 sqlalchemy
 
+psycopg2
+
+
 #Google specific
 google-python-cloud-debugger
 google-cloud-storage
