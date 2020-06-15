@@ -28,17 +28,17 @@ app.config['SECRET_KEY'] = secrets.csrf_key(app.config)
 
 try:
     app.config.from_pyfile('config.py') #dev config overrides prod
-    assert app.config['FLASK_ENV']!='prod' #should never have instance.config in prod
+    assert app.config['ENV']!='prod' #should never have instance.config in prod
 except FileNotFoundError: #pragma: no cover
     pass
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
 
-print(app.config) 
-# db connection
-if app.config['FLASK_ENV']=='dev':
+# db connection, currently only in dev
+if app.config['ENV']=='dev':
     db = SQLAlchemy(app)
     from app import models
+
 
 # load data
 binaries_dict = load_binaries.load_binaries(app.config)
