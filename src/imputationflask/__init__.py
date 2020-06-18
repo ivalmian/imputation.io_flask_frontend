@@ -22,20 +22,20 @@ app = Flask(__name__, instance_relative_config=True)
 # Load config
 # TODO: should be loading from google secret storage if in prod, in dev secrets are in instance/config.py
 
-app.config.from_object('imputationflask.config') #prod config
+app.config.from_object('imputationflask.config')  # prod config
 
 app.config['SECRET_KEY'] = secrets.csrf_key(app.config)
 
 try:
-    app.config.from_pyfile('config.py') #dev config overrides prod
-    assert app.config['ENV']!='prod' #should never have instance.config in prod
-except FileNotFoundError: #pragma: no cover
+    app.config.from_pyfile('config.py')  # dev config overrides prod
+    assert app.config['ENV'] != 'prod'  # should never have instance.config in prod
+except FileNotFoundError:  # pragma: no cover
     pass
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
 
 # db connection, currently only in dev
-if app.config['ENV']=='dev':
+if app.config['ENV'] == 'dev':
     db = SQLAlchemy(app)
     from imputationflask import models
 
@@ -47,8 +47,8 @@ clf = make_prediction.Predict(app.config, binaries_dict)
 predictor = make_prediction.MakePrediction(clf, data_dictionary.data_dict, binaries_dict)
 # form object
 census_form = forms.CensusImputeForm(data_dict=data_dictionary.data_dict,
-                                      numeric_fields=binaries_dict['numeric_mappers'].keys(),
-                                      recordname2description=binaries_dict['recordname2description'])
+                                     numeric_fields=binaries_dict['numeric_mappers'].keys(),
+                                     recordname2description=binaries_dict['recordname2description'])
 
-#circular import of views, TODO: could this be improved?
+# circular import of views, TODO: could this be improved?
 from imputationflask import views

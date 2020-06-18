@@ -29,8 +29,6 @@ class Predict():
     def _build_predictor(self, config):
         assert config['ENV'] == 'dev' or config['ENV'] == 'prod'
 
-        
-
         service = build('ml', 'v1')
         name = f"projects/{config['PROJECT_NAME']}/models/{config['TF_MODEL']}"
 
@@ -45,7 +43,6 @@ class Predict():
             pred = np.expand_dims(
                 np.array(pred['predictions'][0]['output']), axis=0)
             return pred
-      
 
         return predictor
 
@@ -65,7 +62,7 @@ class Predict():
         inferred: np.ndarray[bool]
             Binary mask of inferred elements (the ones for whom prediction is meaningful)
         all_keys List[str]
-            Data keys for which either data or prediction is possible 
+            Data keys for which either data or prediction is possible
         pred_vector: List[int]
             Mostly for debug purpose, this is what is passed to Predict.predictor which returns pred
         '''
@@ -73,7 +70,7 @@ class Predict():
         all_keys = list()
         for key, mapper in self.binaries_dict['numeric_mappers'].items():
             all_keys.append(key)
-            if data.get('mask_'+key, 'n') == 'y' or not str(data[key]).isnumeric():
+            if data.get('mask_' + key, 'n') == 'y' or not str(data[key]).isnumeric():
                 pred_vector.append(0)
             else:
                 val = single_get_closest_value(
@@ -86,7 +83,7 @@ class Predict():
         for key in self.binaries_dict['recordname2description'].keys():
             if key in data and key not in all_keys:
                 all_keys.append(key)
-                if data.get('mask_'+key, 'n') == 'y':
+                if data.get('mask_' + key, 'n') == 'y':
                     pred_vector.append(0)
                 else:
                     pred_vector.append(
@@ -135,10 +132,10 @@ class MakePrediction():
 
                 x = np.asarray(x)
                 mid_w = np.zeros(len(x))
-                mid_w[0] = x[1]-x[0]
-                mid_w[-1] = (x[-1]-x[-2])
-                mid_w[1:-1] = (x[2:] - x[:-2])/2
-                y = y/mid_w
+                mid_w[0] = x[1] - x[0]
+                mid_w[-1] = (x[-1] - x[-2])
+                mid_w[1:-1] = (x[2:] - x[:-2]) / 2
+                y = y / mid_w
 
                 y = smooth(x, y)
             pred_description[key] = {'x': x, 'y': list(y)}

@@ -7,7 +7,7 @@ Prod config, can be overwritten by instance/config.py when present
 
 # non-instance config is for prod
 ENV = "prod"
-DEBUG = False 
+DEBUG = False
 
 # google stuff
 PROJECT_NAME = 'census-impute'
@@ -22,5 +22,5 @@ VAL2IND_PATH = 'val2ind.dill'
 RECORD_DESCRIPTION_PATH = 'recordname2description2.dill'
 
 
-# sql 
+# sql
 SQLALCHEMY_TRACK_MODIFICATIONS = False

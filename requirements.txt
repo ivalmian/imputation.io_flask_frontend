@@ -18,6 +18,3 @@ google-cloud-storage
 google-api-python-client
 google-cloud-secret-manager
 
-#Testing
-coverage
-pytest

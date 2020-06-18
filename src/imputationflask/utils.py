@@ -32,19 +32,20 @@ def smooth(x, y):
     dist = np.zeros((len(x), len(x)))
     for i, x1 in enumerate(x):
         for j, x2 in enumerate(x):
-            dist[i, j] = np.exp(-(x1-x2)**2/(var_scale*x_var))
+            dist[i, j] = np.exp(-(x1 - x2)**2 / (var_scale * x_var))
 
     for i in range(len(y)):
-        y[i] = (dist[i, :]*y).sum()/dist[i, :].sum()
+        y[i] = (dist[i, :] * y).sum() / dist[i, :].sum()
 
     return list(y)
+
 
 def timenlog(func):
 
     @functools.wraps(func)
-    def timenlogs_wrapper(*args,**kwargs):
+    def timenlogs_wrapper(*args, **kwargs):
         s = perf_counter()
-        ret_val = func(*args,**kwargs)
+        ret_val = func(*args, **kwargs)
         e = perf_counter()
         msg = f'{func.__name__} took {e-s} seconds to execute'
         print(msg)
