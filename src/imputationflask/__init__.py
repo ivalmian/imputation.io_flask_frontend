@@ -1,5 +1,5 @@
 '''
-app.__init__
+imputationflask.__init__
 -------------------
 Author: Ilya Valmianski
 Email: ivalmian@gmail.com
@@ -11,10 +11,10 @@ Front end for imputation.io using Flask
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from app.version import __version__
+from imputationflask.version import __version__
 
 # These imports are used during initialization
-from app import make_prediction, data_dictionary, load_binaries, forms, secrets
+from imputationflask import make_prediction, data_dictionary, load_binaries, forms, secrets
 
 # The app is born
 app = Flask(__name__, instance_relative_config=True)
@@ -22,20 +22,23 @@ app = Flask(__name__, instance_relative_config=True)
 # Load config
 # TODO: should be loading from google secret storage if in prod, in dev secrets are in instance/config.py
 
-app.config.from_object('app.config') #prod config
+app.config.from_object('imputationflask.config') #prod config
 
 app.config['SECRET_KEY'] = secrets.csrf_key(app.config)
 
 try:
     app.config.from_pyfile('config.py') #dev config overrides prod
-    assert app.config['FLASK_ENV']!='prod' #should never have instance.config in prod
+    assert app.config['ENV']!='prod' #should never have instance.config in prod
 except FileNotFoundError: #pragma: no cover
     pass
 
 # Run initialization , TODO: is __init__ really the place to run heavy initializations?
 
-# db connection
-# db = SQLAlchemy(app)
+# db connection, currently only in dev
+if app.config['ENV']=='dev':
+    db = SQLAlchemy(app)
+    from imputationflask import models
+
 
 # load data
 binaries_dict = load_binaries.load_binaries(app.config)
@@ -48,4 +51,4 @@ census_form = forms.CensusImputeForm(data_dict=data_dictionary.data_dict,
                                       recordname2description=binaries_dict['recordname2description'])
 
 #circular import of views, TODO: could this be improved?
-from app import views
+from imputationflask import views

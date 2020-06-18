@@ -1,5 +1,5 @@
 '''
-app.make_prediction
+imputationflask.make_prediction
 -------------------
 
 Implements two classes
@@ -13,7 +13,7 @@ MakePrediction
 '''
 
 import numpy as np
-from app.utils import single_get_closest_value, timenlog, rem_duplicates, smooth
+from imputationflask.utils import single_get_closest_value, timenlog, rem_duplicates, smooth
 
 from googleapiclient.discovery import build
 
@@ -27,7 +27,7 @@ class Predict():
 
     # builds self.predictor based on this being a dev or prod env
     def _build_predictor(self, config):
-        assert config['FLASK_ENV'] == 'dev' or config['FLASK_ENV'] == 'prod'
+        assert config['ENV'] == 'dev' or config['ENV'] == 'prod'
 
         
 

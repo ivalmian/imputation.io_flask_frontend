@@ -2,13 +2,13 @@ runtime: python37
 
 service: default
 
-entrypoint: gunicorn app:app -b :$PORT
+entrypoint: gunicorn --chdir src imputationflask:app -b :$PORT
 
 # URL handlers
 handlers:
   # Static files
 - url: /static
-  static_dir: app/static
+  static_dir: imputationflask/static
 
   # Direct to main app
 - url: /.*

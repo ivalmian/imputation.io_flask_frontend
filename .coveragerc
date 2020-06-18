@@ -2,9 +2,9 @@
 
 branch=True
 omit =
-    app/test/*
+    src/imputationflask/test/*
 include = 
-    app/*
+    src/imputationflask/*
 [report]
 # Regexes for lines to exclude from consideration
 exclude_lines =

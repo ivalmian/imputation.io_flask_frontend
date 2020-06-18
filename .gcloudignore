@@ -11,3 +11,4 @@ gcloud_credential
 .coverage
 .tox
 .mypy_cache
+.pylintrc

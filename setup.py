@@ -1,5 +1,5 @@
 from distutils.core import setup
-setup(name='app',
+setup(name='imputationflask',
       version='0.2.0',
-      py_modules=['app'],
+      py_modules=['imputationflask'],
       )

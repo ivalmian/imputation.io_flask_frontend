@@ -1,5 +1,5 @@
 '''
-app.utils
+imputationflask.utils
 -------------------
 Random utilities that are not dependent on other application components
 '''
@@ -40,7 +40,7 @@ def smooth(x, y):
     return list(y)
 
 def timenlog(func):
-    from app import app
+
     @functools.wraps(func)
     def timenlogs_wrapper(*args,**kwargs):
         s = perf_counter()
@@ -48,7 +48,5 @@ def timenlog(func):
         e = perf_counter()
         msg = f'{func.__name__} took {e-s} seconds to execute'
         print(msg)
-        app.logger.info(msg) # pylint: disable=no-member
-
         return ret_val
     return timenlogs_wrapper

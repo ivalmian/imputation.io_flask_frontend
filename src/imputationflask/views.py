@@ -1,11 +1,11 @@
 '''
-app.views
+imputationflask.views
 -------------------
 Define routes render by flask
 '''
 
 # imports from our package
-from app import app, predictor, census_form, binaries_dict
+from imputationflask import app, predictor, census_form, binaries_dict
 # external imports
 from flask import render_template, request  # , jsonify
 from werkzeug.exceptions import HTTPException

@@ -1,12 +1,12 @@
 '''
-app.config
+imputationflask.config
 -------------------
 Prod config, can be overwritten by instance/config.py when present
 
 '''
 
 # non-instance config is for prod
-FLASK_ENV = "prod"
+ENV = "prod"
 DEBUG = False 
 
 # google stuff
