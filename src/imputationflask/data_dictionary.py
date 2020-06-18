@@ -8,11 +8,11 @@ Provides a data dictionary for discrete values
 data_dict = {
 
     'CIT': {
-        1:  "Born in the U.S.",
-        2:  "Born in Puerto Rico, Guam, the U.S. Virgin Islands, or the Northern Marianas",
-        3:  "Born abroad of American parent(s)",
-        4:  "U.S. citizen by naturalization",
-        5:  "Not a citizen of the U.S."
+        1: "Born in the U.S.",
+        2: "Born in Puerto Rico, Guam, the U.S. Virgin Islands, or the Northern Marianas",
+        3: "Born abroad of American parent(s)",
+        4: "U.S. citizen by naturalization",
+        5: "Not a citizen of the U.S."
     },
 
     "COW": {

@@ -1,6 +1,8 @@
 *.dill
 .idea
 
+test_reports
+
 *.pyc
 binaries
 instance

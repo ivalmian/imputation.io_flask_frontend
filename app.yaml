@@ -8,7 +8,19 @@ entrypoint: gunicorn --chdir src imputationflask:app -b :$PORT
 handlers:
   # Static files
 - url: /static
-  static_dir: imputationflask/static
+  static_dir: src/imputationflask/static
+
+- url: /robots.txt
+  static_files: src/imputationflask/static/robots.txt
+  upload: src/imputationflask/static/robots.txt
+
+- url: /humans.txt
+  static_files: src/imputationflask/static/humans.txt
+  upload: src/imputationflask/static/humans.txt
+
+- url: /sitemap.txt
+  static_files: src/imputationflask/static/sitemap.txt
+  upload: src/imputationflask/static/sitemap.txt
 
   # Direct to main app
 - url: /.*
