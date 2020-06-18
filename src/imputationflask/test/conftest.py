@@ -5,7 +5,7 @@ Utilities and configuration for testing
 '''
 
 import pytest
-from imputationflask import app#, db
+from imputationflask import app, db
 from numpy.random import choice
 from imputationflask import data_dictionary, binaries_dict
 
@@ -34,10 +34,11 @@ def client():
     app.config['TESTING'] = True
     
     with app.test_client() as client:
-        # with app.app_context():
-        #     db.create_all()
         yield client
 
-#    db.drop_all()
-
-
+@pytest.fixture
+def database():
+    with app.app_context():
+        db.create_all()
+        yield database
+        db.drop_all()
