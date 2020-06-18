@@ -1,5 +1,5 @@
 '''
-app.config
+imputationflask.config
 -------------------
 Prod config, can be overwritten by instance/config.py when present
 

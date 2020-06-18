@@ -1,5 +1,5 @@
 '''
-app.load_binaries
+imputationflask.load_binaries
 -------------------
 Reads binaries for the ml model using paths in app.config and returns them
 

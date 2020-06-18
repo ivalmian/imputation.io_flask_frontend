@@ -1,5 +1,5 @@
 '''
-app.secrets
+imputationflask.secrets
 -------------------
 Gets secrets from google cloud secret manager. Relies on proper IAM
 

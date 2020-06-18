@@ -1,5 +1,5 @@
 '''
-app.data_dictionary
+imputationflask.data_dictionary
 -------------------
 Provides a data dictionary for discrete values
 '''

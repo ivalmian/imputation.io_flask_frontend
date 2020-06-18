@@ -11,7 +11,7 @@ bin/run_local.sh
 To run using flask debug dev server
 
 ```
-python -m app
+python -m imputationflask
 ```
 
 ## Testing
@@ -25,7 +25,7 @@ tox
 There are pytest submodule in
 
 ```
-app.test
+imputationflask.test
 ```
 
 ## Deployment to Google Apps Engine

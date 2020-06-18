@@ -1,5 +1,5 @@
 '''
-app.make_prediction
+imputationflask.make_prediction
 -------------------
 
 Implements two classes
@@ -13,7 +13,7 @@ MakePrediction
 '''
 
 import numpy as np
-from app.utils import single_get_closest_value, timenlog, rem_duplicates, smooth
+from imputationflask.utils import single_get_closest_value, timenlog, rem_duplicates, smooth
 
 from googleapiclient.discovery import build
 
