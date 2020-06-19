@@ -2,7 +2,7 @@ runtime: python37
 
 service: default
 
-entrypoint: gunicorn --chdir src imputationflask:app -b :$PORT
+entrypoint: gunicorn --chdir src "imputationflask:application()" -b :$PORT
 
 # URL handlers
 handlers:

@@ -10,7 +10,8 @@ bin/run_local.sh
 which utilizes gunicorn as the app server
 '''
 
-from imputationflask import app
+from imputationflask import application
 
 if __name__ == '__main__':
+    app = application()
     app.run(debug=True)
