@@ -1,10 +1,17 @@
-from imputationflask import db
-from datetime import datetime
+'''
+imputationflask.model
+-------------------
+Database model
+'''
 
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
 HASH_STRING_SIZE = 128
 COMMENT_STRING_SIZE = 1000
 EMAIL_STRING_SIZE = 254
+
+db = SQLAlchemy()
 
 
 class Comment(db.Model):
