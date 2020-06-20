@@ -44,17 +44,21 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-            labels: [{% for name in pred_description[key]['x'] %}
-                        "{{name}}",
-                    {% endfor %}],
-            datasets: [{
-                label: '{{ description_dict[key] }}',
-                data: {{ pred_description[key]['y'] }},
-                backgroundColor: "#3e95cdcc",
-                borderColor: "#00468C",
+         
+            labels: [ "{{ description_dict[key] }}"],
+                    
+                    
+            datasets: [
+            {% for i in range(pred_description[key]['y']|length) %}
+            {
+                label: '{{ pred_description[key]['x'][i] }}',
+                data: [{{ pred_description[key]['y'][i] }}],
+                backgroundColor: "#"
 				borderWidth: 1,
-
-                }],
+            
+            },
+            {% endfor %}    
+            ],
             options: {
                
             }

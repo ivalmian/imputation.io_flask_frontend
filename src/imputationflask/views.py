@@ -28,8 +28,9 @@ def web_app():
     return render_template('webapp.html',
                            form=form,
                            pred_description=pred_description,
-                           description_dict=current_app.persistent.binaries_dict[
-                               'recordname2description'],
+                           description_dict=(current_app
+                                             .persistent
+                                             .binaries_dict['recordname2description']),
                            numeric_keys=list(current_app.persistent.binaries_dict['numeric_mappers'].keys()))
 
 
