@@ -30,7 +30,9 @@
                 {% endfor %} ],
                 showLine: true,
                 pointRadius: 0,
-                backgroundColor: "#3e95cd"
+                borderColor: "#00468C",
+                borderWidth: 1,
+                backgroundColor: "#3e95cdcc"
 
                 }],
 
@@ -48,15 +50,13 @@
             datasets: [{
                 label: '{{ description_dict[key] }}',
                 data: {{ pred_description[key]['y'] }},
-                backgroundColor: "#3e95cd"
+                backgroundColor: "#3e95cdcc",
+                borderColor: "#00468C",
+				borderWidth: 1,
+
                 }],
             options: {
-                scales: {
-                    xAxes: [{
-                        barThickness: 1,  // number (pixels) or 'flex'
-                        maxBarThickness: 4 // number (pixels)
-                    }]
-                }
+               
             }
 
             },
