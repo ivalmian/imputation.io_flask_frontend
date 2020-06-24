@@ -24,27 +24,26 @@ def make_graph_data(pred_description):
         if key in current_app.persistent.binaries_dict['numeric_mappers'].keys():
 
             graph_data[key] = json.dumps([{'label': current_app.persistent.binaries_dict['recordname2description'][key],
-                                'data': [{'x': x, 'y': y} for x, y in zip(pred['x'], pred['y'])],
-                                'showLine': True,
-                                'pointRadius': 0,
-                                'borderColor': "#00468C",
-                                'borderWidth': 1,
-                                'backgroundColor': "#3e95cdcc"}])
+                                           'data': [{'x': float(x), 'y': float(y)} for x, y in zip(pred['x'], pred['y'])],
+                                           'showLine': True,
+                                           'pointRadius': 0,
+                                           'borderColor': "#00468C",
+                                           'borderWidth': 1,
+                                           'backgroundColor': "#3e95cdcc"}])
 
         else:
 
-            l = len(pred['y'])
-            cmap = cm.get_cmap(colormap_name, l)
+            N = len(pred['y'])
+            cmap = cm.get_cmap(colormap_name, N)
             colors = [f'#{"".join(str(hex(int(255*c))[2:]) for c in color[:3] )}'
                       for color in cmap.colors]  # TODO: This probably has a more elegant solution
             graph_data[key] = json.dumps([{
                 'label': pred['x'][i],
-                'data': [pred['y'][i]],
+                'data': [float(pred['y'][i])],
                 'backgroundColor': colors[i],
                 'borderWidth': 1}
 
-                for i in range(l)])
-
+                for i in range(N)])
 
     return graph_data
 
