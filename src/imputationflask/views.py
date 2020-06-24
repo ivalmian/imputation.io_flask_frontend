@@ -39,7 +39,7 @@ def make_graph_data(pred_description):
                       for color in cmap.colors]  # TODO: This probably has a more elegant solution
             graph_data[key] = json.dumps([{
                 'label': pred['x'][i],
-                'data': [float(pred['y'][i])],
+                'data': [round(float(pred['y'][i]), 2)],
                 'backgroundColor': colors[i],
                 'borderWidth': 1}
 

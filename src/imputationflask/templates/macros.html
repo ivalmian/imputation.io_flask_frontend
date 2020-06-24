@@ -19,29 +19,30 @@
         var myChart = new Chart(ctx, {
             type: 'scatter',
             data: {
-
-            datasets: {{ graph_data[key]|safe }},
-
-            },
-
-        });
+                datasets: {{ graph_data[key]|safe }},
+            }});
 {% else %}
     var ctx = document.getElementById("{{ key.lower() }}");
         var myChart = new Chart(ctx, {
             type: 'bar',
-            data: {
-         
-            labels: [ "{{ description_dict[key] }}"],
-                    
-                    
-            datasets: {{ graph_data[key]|safe }},
-            options: {
-               
-            }
-
+            data: {  
+                labels: [ "{{ description_dict[key] }}"],        
+                datasets: {{ graph_data[key]|safe }},
+                
             },
-
-        });
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                                display: true,
+                                ticks: {         
+                                    min: 0,
+                                    max: 1
+                                }
+                            }]
+                        }
+                }
+            });
 {% endif %}
 
 
