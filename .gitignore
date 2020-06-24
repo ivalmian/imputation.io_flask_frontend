@@ -2,6 +2,7 @@
 .idea
 
 test_reports
+.VSCodeCounter
 
 *.pyc
 binaries
