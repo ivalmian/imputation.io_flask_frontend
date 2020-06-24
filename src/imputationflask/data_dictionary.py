@@ -9,21 +9,21 @@ data_dict = {
 
     'CIT': {
         1: "Born in the U.S.",
-        2: "Born in Puerto Rico, Guam, the U.S. Virgin Islands, or the Northern Marianas",
+        2: "Born in a U.S. territory",
         3: "Born abroad of American parent(s)",
         4: "U.S. citizen by naturalization",
         5: "Not a citizen of the U.S."
     },
 
     "COW": {
-        1: "Employee of a private for-profit company or business, or of an individual",
-        2: "Employee of a private not-for-profit, tax-exempt, or charitable organization",
-        3: "Local government employee (city, county, etc.)",
-        4: "State government employee",
-        5: "Federal government employee",
-        6: "Self-employed in own not incorporated business, professional practice, or farm",
-        7: "Self-employed in own incorporated business, professional practice or farm",
-        8: "Working without pay in family business or farm",
+        1: "For-profit company",
+        2: "Non-profit org",
+        3: "Municipal government",
+        4: "State government",
+        5: "Federal government",
+        6: "Self-employed, not incorporated",
+        7: "Self-employed, incorporated",
+        8: "Working without pay",
         9: "Unemployed"
     },
 
@@ -36,14 +36,14 @@ data_dict = {
     },
 
     "SCH": {
-        1: "No, has not attended in the last 3 months",
-        2: "Yes, public school or public college",
-        3: "Yes, private school, private college, or home school"
+        1: "Not in school",
+        2: "Public school",
+        3: "Private school"
     },
 
     "SCHL": {
-        1: "No schooling completed",
-        2: "Nursery school, preschool",
+        1: "No schooling",
+        2: "Preschool",
         3: "Kindergarten",
         4: "Grade 1",
         5: "Grade 2",
@@ -59,12 +59,12 @@ data_dict = {
         15: "12th grade - no diploma",
         16: "Regular high school diploma",
         17: "GED or alternative credential",
-        18: "Some college, but less than 1 year",
-        19: "1 or more years of college credit, no degree",
+        18: "Less than 1 year college",
+        19: "1 or more years of college",
         20: "Associate's degree",
         21: "Bachelor's degree",
         22: "Master's degree",
-        23: "Professional degree beyond a bachelor's degree",
+        23: "Professional degree",
         24: "Doctorate degree"
     },
 
@@ -74,19 +74,19 @@ data_dict = {
     },
 
     "HICOV": {
-        1: "With health insurance coverage",
-        2: "No health insurance coverage"
+        1: "With health insurance",
+        2: "No health insurance "
     },
 
     "RAC1P": {
         1: "White alone",
-        2: "Black or African American alone",
+        2: "African American alone",
         3: "American Indian alone",
         4: "Alaska Native alone",
-        5: "American Indian and Alaska Native tribes and no other races",
+        5: "Indian and Alaska tribes",
         6: "Asian alone",
-        7: "Native Hawaiian and Other Pacific Islander alone",
-        8: "Some Other Race alone",
+        7: "Hawaiian and Other Pacific Islander",
+        8: "Other Race alone",
         9: "Two or More Races"
     }
 

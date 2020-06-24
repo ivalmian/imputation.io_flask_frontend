@@ -8,6 +8,7 @@ flask_wtf
 gunicorn
 flask_sqlalchemy
 sqlalchemy
+matplotlib
 
 psycopg2
 
