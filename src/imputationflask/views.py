@@ -61,12 +61,10 @@ def web_app():
         pred_description = current_app.persistent.predictor(request.form)
         graph_data = make_graph_data(pred_description)
     else:
-        pred_description = None
         graph_data = None
 
     return render_template('webapp.html',
                            form=form,
-                           pred_description=pred_description,
                            graph_data=graph_data,
                            description_dict=(current_app
                                              .persistent
