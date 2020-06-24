@@ -11,7 +11,7 @@ bin/run_local.sh
 To run using flask debug dev server
 
 ```
-python -m imputationflask
+bin/run_local_debug.sh
 ```
 
 ## Testing
