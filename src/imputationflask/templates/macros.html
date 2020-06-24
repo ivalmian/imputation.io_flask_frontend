@@ -11,7 +11,7 @@
 
 <!-- plot graph -->
 
-{% macro plot_result(pred_description, description_dict, numeric_keys, key) %}
+{% macro plot_result(pred_description, description_dict, numeric_keys, key, graph_data) %}
 
 {% if key in numeric_keys %}
 
@@ -20,21 +20,7 @@
             type: 'scatter',
             data: {
 
-            datasets: [{
-                label: '{{ description_dict[key] }}',
-                data: [
-                {% for i in range(pred_description[key]['y']|length) %}
-
-                        {x: {{ pred_description[key]['x'][i] }}, y: {{ pred_description[key]['y'][i] }} },
-
-                {% endfor %} ],
-                showLine: true,
-                pointRadius: 0,
-                borderColor: "#00468C",
-                borderWidth: 1,
-                backgroundColor: "#3e95cdcc"
-
-                }],
+            datasets: {{ graph_data[key]|safe }},
 
             },
 
@@ -48,17 +34,7 @@
             labels: [ "{{ description_dict[key] }}"],
                     
                     
-            datasets: [
-            {% for i in range(pred_description[key]['y']|length) %}
-            {
-                label: '{{ pred_description[key]['x'][i] }}',
-                data: [{{ pred_description[key]['y'][i] }}],
-                backgroundColor: "#"
-				borderWidth: 1,
-            
-            },
-            {% endfor %}    
-            ],
+            datasets: {{ graph_data[key]|safe }},
             options: {
                
             }

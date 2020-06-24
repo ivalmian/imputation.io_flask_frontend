@@ -75,10 +75,10 @@
 </div>
 
 
- {% if pred_description  %}
+ {% if pred_description and graph_data %}
 <script>
     {% for key in pred_description.keys() %}
-        {{ plot_result(pred_description, description_dict, numeric_keys, key) }}
+        {{ plot_result(pred_description, description_dict, numeric_keys, key, graph_data) }}
     {% endfor %}
 </script>
 {% endif %}
