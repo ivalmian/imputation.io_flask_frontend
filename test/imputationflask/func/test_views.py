@@ -1,5 +1,5 @@
 '''
-imputationflask.test.func.test_views
+test/imputationflask func.test_views
 -------------------
 Functional tests to see that all views return appropraitely
 '''
