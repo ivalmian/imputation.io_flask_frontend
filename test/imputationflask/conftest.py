@@ -1,5 +1,5 @@
 '''
-imputationflask.test.conftest
+test/imputationflask conftest
 -------------------
 Utilities and configuration for testing
 '''
