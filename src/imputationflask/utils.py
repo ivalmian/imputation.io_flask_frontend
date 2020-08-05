@@ -20,7 +20,7 @@ def rem_duplicates(ts):
         if not isinstance(t[0], str):
             t_new[t[0]] += t[1]
         else:
-            print(t)
+            pass  # print(f'Removing duiplicate: {t}')
     return list(t_new.items())
 
 

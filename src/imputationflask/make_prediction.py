@@ -23,6 +23,7 @@ class Predict():
     def __init__(self, config, binaries_dict):
         self.predictor = self._build_predictor(config)
         self.binaries_dict = binaries_dict
+
         return
 
     # builds self.predictor based on this being a dev or prod env
@@ -33,9 +34,11 @@ class Predict():
         name = f"projects/{config['PROJECT_NAME']}/models/{config['TF_MODEL']}"
 
         @timenlog
-        def predictor(inp_vec):
-            instances = [{'input': inp_vec.astype(int).tolist()}]
+        def predictor(inp_vec, pos_vec):
+            instances = [{'input': inp_vec.astype(int).tolist(),
+                          'input_pos': pos_vec.astype(int).tolist()}]
 
+            print(instances)
             pred = service.projects().predict(  # pylint: disable=no-member
                 name=name,
                 body={'instances': instances}
@@ -46,7 +49,7 @@ class Predict():
 
         return predictor
 
-    def predict(self, data):
+    def predict(self, data, data_dict):
         '''
         Maps form data into predictions for masked/empty data elements
         Args
@@ -66,6 +69,7 @@ class Predict():
         pred_vector: List[int]
             Mostly for debug purpose, this is what is passed to Predict.predictor which returns pred
         '''
+
         pred_vector = list()
         all_keys = list()
         for key, mapper in self.binaries_dict['numeric_mappers'].items():
@@ -73,28 +77,37 @@ class Predict():
             if data.get('mask_' + key, 'n') == 'y' or not str(data[key]).isnumeric():
                 pred_vector.append(0)
             else:
+                numeric_entry = float(data[key])
                 val = single_get_closest_value(
-                    float(data[key]), mapper['forward'])
-                pred_vector.append(
-                    self.binaries_dict['val2ind'].get((key,
-                                                       val),
-                                                      0))
+                    numeric_entry, mapper['forward'])
+                full_key = (key, val)
+                mapped_value = self.binaries_dict['val2ind'].get(full_key, 0)
 
-        for key in self.binaries_dict['recordname2description'].keys():
+                print(f'Attempting to map the following numerical value: {numeric_entry}, '
+                      f'precentile mapped key: {full_key}, got the following mapping: {mapped_value}')
+
+                pred_vector.append(mapped_value)
+
+        for key in data_dict.keys():
             if key in data and key not in all_keys:
                 all_keys.append(key)
                 if data.get('mask_' + key, 'n') == 'y':
                     pred_vector.append(0)
                 else:
-                    pred_vector.append(
-                        self.binaries_dict['val2ind'].get((key,
-                                                           int(data[key])),
-                                                          0))
+                    full_key = (key, data_dict[key].get(
+                        int(data[key]), 'No Mapping'))
+                    mapped_value = self.binaries_dict['val2ind'].get(
+                        full_key, 0)
+                    print(
+                        f'Attempting to map the following categorical key: {full_key}, got the following mapping: {mapped_value}')
+                    pred_vector.append(mapped_value)
 
         pred_vector_np = np.array(pred_vector)
-        inferred = np.argwhere(pred_vector_np == 0).flatten()
+        pos_vector_np = np.arange(len(pred_vector_np))
 
-        pred = self.predictor(pred_vector_np)
+        inferred = np.argwhere(pred_vector_np == 0).flatten()
+        print(all_keys)
+        pred = self.predictor(pred_vector_np, pos_vector_np)
         return pred, inferred, all_keys, pred_vector
 
 
@@ -108,7 +121,8 @@ class MakePrediction():
     # TODO: this was whole-sale taken from view.web_app, but might need to be further refactored
     def __call__(self, form_data):
 
-        pred, inferred, all_keys, _ = self.clf.predict(form_data)
+        pred, inferred, all_keys, _ = self.clf.predict(
+            form_data, self.data_dict)
         pred_description = dict()
 
         for inferred_ind in inferred:
@@ -117,6 +131,7 @@ class MakePrediction():
                            (self.data_dict[t[0]].get(t[1], t[1])
                             if t[0] in self.data_dict else t[1]))
                        for t, i in self.binaries_dict['val2ind'].items() if t[0] == key}
+
             x, y = zip(*[(pred_desc[1], pred[0, inferred_ind, ind])
                          for ind, pred_desc in ind2val.items()])
 
